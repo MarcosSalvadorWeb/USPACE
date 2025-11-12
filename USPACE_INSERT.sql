@@ -14,7 +14,9 @@ CREATE TABLE usuario (
     unome VARCHAR(50)
 );
 
---- Insert 150 Alunos
+--- Insert 150 Alunos 
+--- Fazer o Insert de mais 100 alunos 
+
 INSERT INTO usuario (email, senha, nusp, rg, foto, nome, pnome, unome) VALUES
 ('ana_silva@usp.br', '@ewS6uMI', 49018460, '846626415', NULL, 'Ana Silva', 'Ana', 'Silva'),
 ('bruno_santos@usp.br', '6G8#vzy!', 99617579, '660043947', NULL, 'Bruno Santos', 'Bruno', 'Santos'),
@@ -166,6 +168,9 @@ INSERT INTO usuario (email, senha, nusp, rg, foto, nome, pnome, unome) VALUES
 ('amanda_souza@usp.br', '2Gh26PXP', 57040254, '645017546', NULL, 'Amanda Souza', 'Amanda', 'Souza'),
 ('thiago_carvalho@usp.br', 'slyIGI4m', 21582456, '205799803', NULL, 'Thiago Carvalho', 'Thiago', 'Carvalho'),
 ('marina_araujo@usp.br', 'aQK!Ycv!', 55941275, '746382070', NULL, 'Marina Araujo', 'Marina', 'Araujo');
+
+--- Corrigir sala dos professores e retirar salas de funcionários 
+--- Colocar mais professores 
 
 --- Insert 50 professores
 INSERT INTO usuario (email, senha, nusp, rg, foto, nome, pnome, unome) VALUES
@@ -566,6 +571,8 @@ INSERT INTO departamento (nome, sigla, contato, email, telefone, id_instituto) V
 ('Departamento de Jornalismo e Editoração', 'JOR', 'jor@eca.usp.br', 'jornalismo@eca.usp.br', '(11) 3091-6001', 7),
 ('Departamento de Publicidade e Propaganda', 'PUB', 'pub@eca.usp.br', 'publicidade@eca.usp.br', '(11) 3091-6003', 7);
 
+DROP TABLE IF EXISTS disciplina CASCADE;
+TRUNCATE disciplina CASCADE;
 -- tabela disciplina
 CREATE TABLE disciplina (
     sigla VARCHAR(20) PRIMARY KEY UNIQUE,
@@ -646,7 +653,7 @@ INSERT INTO disciplina (sigla, nome, objetivo, conteudo, bibliografia, id_depart
 ('EAD0616', 'Teoria das Organizações', NULL, NULL, NULL, 7),
 ('EAD0745', 'Marketing I: Conceitos e Estratégias', NULL, NULL, NULL, 7),
 ('EAC0106', 'Contabilidade Introdutória', NULL, NULL, NULL, 7),
-('EAC0217', 'Matemática Financeira', NULL, NULL, NULL, 7),
+('EAC0208', 'Matemática Financeira', NULL, NULL, NULL, 7),
 ('EAD0610', 'Fundamentos de Administração', NULL, NULL, NULL, 7),
 ('DFD0152', 'Instituições de Direito', NULL, NULL, NULL, 7),
 ('EAC0206', 'Contabilidade de Custos', NULL, NULL, NULL, 7),
@@ -763,6 +770,8 @@ INSERT INTO disciplina (sigla, nome, objetivo, conteudo, bibliografia, id_depart
 ('CRP0435', 'Mercadologia e Publicidade', NULL, NULL, NULL, 19);
 
 -- tabela turma
+TRUNCATE TABLE turma CASCADE;
+DROP TABLE IF EXISTS turma CASCADE;
 CREATE TABLE turma (
     sigla_disciplina VARCHAR(20) NOT NULL,
     codigo_turma VARCHAR(5) NOT NULL, -- Diferencia turmas de uma mesma disciplina em dois horários
@@ -774,146 +783,179 @@ CREATE TABLE turma (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO turma (sigla_disciplina, codigo_turma, vigencia, ano, semestre) VALUES
--- IME (Matemática, Estatística, Computação)
-('MAE0121', 'T01', '2025-2026', 2025, 1), -- Introdução a Prob e Estatística I
-('MAE0111', 'T01', '2025-2026', 2025, 1), -- Análise Exploratória de Dados
-('MAT2453', 'T01', '2025-2026', 2025, 1), -- Cálculo Diferencial e Integral I
-('MAT0112', 'T01', '2025-2026', 2025, 1), -- Vetores e Geometria
-('MAT0101', 'T01', '2025-2026', 2025, 1), -- Tópicos de Matemática Elementar
-('MAC0110', 'T01', '2025-2026', 2025, 1), -- Introdução à Computação
-('MAT1351', 'T01', '2025-2026', 2025, 1), -- Cálculo para Funções de Uma Variável I
-('MAC0105', 'T01', '2025-2026', 2025, 1), -- Fundamentos de Matemática para Computação
-('MAC0121', 'T01', '2025-2026', 2025, 1), -- Algoritmos e Estruturas de Dados I
-
--- FEA (Economia, Administração, Contabilidade)
-('EAE0110', 'T01', '2025-2026', 2025, 1), -- Fundamentos de Microeconomia
-('EAE1101', 'T01', '2025-2026', 2025, 1), -- Princípios de Microeconomia
-('MAT0146', 'T01', '2025-2026', 2025, 1), -- Cálculo Dif e Integral I para Economia
-('EAD0912', 'T01', '2025-2026', 2025, 1), -- Administração
-('EAD0610', 'T01', '2025-2026', 2025, 1), -- Fundamentos de Administração
-('EAC0111', 'T01', '2025-2026', 2025, 1), -- Fundamentos de Contabilidade
-('EAC0106', 'T01', '2025-2026', 2025, 1), -- Contabilidade Introdutória
-('DFD0152', 'T01', '2025-2026', 2025, 1), -- Instituições de Direito
-
--- FAU (Arquitetura e Design)
-('AUH0236', 'T01', '2025-2026', 2025, 1), -- História da Urbanização e do Urbanismo I
-('AUP0608', 'T01', '2025-2026', 2025, 1), -- Fundamentos de Projeto
-('AUT0510', 'T01', '2025-2026', 2025, 1), -- Geometria Aplicada à Prod Arquitetônica
-('MAT0141', 'T01', '2025-2026', 2025, 1), -- Matemática para Arquitetura e Urbanismo
-('AUH2818', 'T01', '2025-2026', 2025, 1), -- História da Arte, Arquitetura e Técnicas
-('AUP2318', 'T01', '2025-2026', 2025, 1), -- Linguagens Visuais
-('AUT2518', 'T01', '2025-2026', 2025, 1), -- Materiais e Processos de Produção I
-('AUP2422', 'T01', '2025-2026', 2025, 1), -- Fundamentos do Projeto: Experimentação
-
--- IF (Física)
-('4302111', 'T01', '2025-2026', 2025, 1), -- Física I
-('4302113', 'T01', '2025-2026', 2025, 1), -- Física Experimental I
-('4300151', 'T01', '2025-2026', 2025, 1), -- Fundamentos de Mecânica
-('4310111', 'T01', '2025-2026', 2025, 1), -- Física I (Licenciatura)
-('4300152', 'T01', '2025-2026', 2025, 1), -- Introdução às Medidas em Física
-('EDM0402', 'T01', '2025-2026', 2025, 1), -- Didática
-
--- IAG (Astronomia, Geofísica, Meteorologia)
-('1400101', 'T01', '2025-2026', 2025, 1), -- Introdução às Ciências da Terra e Universo
-('AGA0100', 'T01', '2025-2026', 2025, 1), -- Astronomia: Uma Visão Geral I
-('AGG0116', 'T01', '2025-2026', 2025, 1), -- Introdução à Geofísica
-('ACA0116', 'T01', '2025-2026', 2025, 1), -- Introdução às Ciências Atmosféricas I
-
--- IO (Oceanografia)
-('2100101', 'T01', '2025-2026', 2025, 1), -- Sistema Oceano I
-('IOB0167', 'T01', '2025-2026', 2025, 1), -- Oceanografia Biológica I
-('QFL1150', 'T01', '2025-2026', 2025, 1), -- Química Básica
-
--- ECA (Jornalismo e Publicidade)
-('CJE0508', 'T01', '2025-2026', 2025, 1), -- Teoria da Comunicação
-('CJE0587', 'T01', '2025-2026', 2025, 1), -- Lab de Iniciação em Jornalismo
-('CJE0518', 'T01', '2025-2026', 2025, 1), -- Filosofia
-('CCA0255', 'T01', '2025-2026', 2025, 1), -- Teoria da Comunicação (Publicidade)
-('CRP0349', 'T01', '2025-2026', 2025, 1), -- Teoria e Técnica da Publicidade I
-('CCA0258', 'T01', '2025-2026', 2025, 1), -- Fundamentos de Sociologia Geral
 
 INSERT INTO turma (sigla_disciplina, codigo_turma, vigencia, ano, semestre) VALUES
--- IME (Matemática, Estatística, Computação)
-('MAE0212', 'T01', '2025-2026', 2025, 2), -- Introdução à Prob e Estatística II
-('MAE0127', 'T01', '2025-2026', 2025, 2), -- Probabilidade I
-('MAE0225', 'T01', '2025-2026', 2025, 2), -- Introdução a Inferência
-('MAT3211', 'T01', '2025-2026', 2025, 2), -- Cálculo II para Estatística
-('MAT2454', 'T01', '2025-2026', 2025, 2), -- Cálculo Diferencial e Integral II
-('MAT0122', 'T01', '2025-2026', 2025, 2), -- Algebra Linear I
-('MAT0164', 'T01', '2025-2026', 2025, 2), -- Teoria Elementar dos Números
-('MAP2110', 'T01', '2025-2026', 2025, 2), -- Introdução aos Modelos Lineares
-('MAT1352', 'T01', '2025-2026', 2025, 2), -- Cálculo para Funções de Uma Variável II
-('MAC0329', 'T01', '2025-2026', 2025, 2), -- Algebra Booleana e Aplicações
-('MAC0122', 'T01', '2025-2026', 2025, 2), -- Princípios de Desenvolvimento de Algoritmos
-('MAC0126', 'T01', '2025-2026', 2025, 2), -- Técnicas de Programação I
+-- =================================================================
+-- 1º SEMESTRE (semestre = 1) - Vigência '2025-1'
+-- =================================================================
 
--- FEA (Economia, Administração, Contabilidade)
-('EAE0111', 'T01', '2025-2026', 2025, 2), -- Fundamentos de Macroeconomia
-('EAE1102', 'T01', '2025-2026', 2025, 2), -- Princípios de Macroeconomia
-('EAE1104', 'T01', '2025-2026', 2025, 2), -- Algebra Linear para Economia
-('MAT0147', 'T01', '2025-2026', 2025, 2), -- Cálculo Dif e Integral II para Economia
-('EAD0616', 'T01', '2025-2026', 2025, 2), -- Teoria das Organizações
-('EAD0745', 'T01', '2025-2026', 2025, 2), -- Marketing I: Conceitos e Estratégias
-('EAC0208', 'T01', '2025-2026', 2025, 2), -- Matemática Financeira
-('EAC0205', 'T01', '2025-2026', 2025, 2), -- Custos para Decisão e Controle
-('EAC0206', 'T01', '2025-2026', 2025, 2), -- Contabilidade de Custos
-('EAC0217', 'T01', '2025-2026', 2025, 2), -- Matemática Financeira (Contábeis)
-('EAC0480', 'T01', '2025-2026', 2025, 2), -- Contabilidade Intermediária I
+-- Disciplinas de Estatística (EST)
+('MAE0121', 'T01', '2025-1', 2025, 1), -- Introdução a Prob e Estatística I (Estatística)
+('MAE0127', 'T01', '2025-1', 2025, 1), -- Probabilidade I (Estatística)
+('MAE0111', 'T01', '2025-1', 2025, 1), -- Análise Exploratória de Dados (Estatística)
 
--- FAU (Arquitetura e Design)
-('AUH0158', 'T01', '2025-2026', 2025, 2), -- História e Teorias da Arquitetura I
-('AUP0344', 'T01', '2025-2026', 2025, 2), -- Linguagens Visuais Gráficas e Ambientais
-('AUT0182', 'T01', '2025-2026', 2025, 2), -- Construção do Edifício 1
-('PCC0201', 'T01', '2025-2026', 2025, 2), -- Geometria Descritiva
-('AUH2806', 'T01', '2025-2026', 2025, 2), -- História do Design I
-('AUH2502', 'T01', '2025-2026', 2025, 2), -- Fundamentos Sociais do Design
-('AUP2320', 'T01', '2025-2026', 2025, 2), -- Tipografia
-('AUP2424', 'T01', '2025-2026', 2025, 2), -- Estratégias Analógicas de Projeto
+-- Disciplinas de Matemática (MAT)
+('MAT2453', 'T01', '2025-1', 2025, 1), -- Cálculo Diferencial e Integral I (Estatística)
+('MAT2453', 'T02', '2025-1', 2025, 1), -- Cálculo Diferencial e Integral I (Mat. Pura)
+('MAT2453', 'T03', '2025-1', 2025, 1), -- Cálculo Diferencial e Integral I (Mat. Aplicada)
+('MAT0112', 'T01', '2025-1', 2025, 1), -- Vetores e Geometria (Estatística)
+('MAT0112', 'T02', '2025-1', 2025, 1), -- Vetores e Geometria (Mat. Pura)
+('MAT0112', 'T03', '2025-1', 2025, 1), -- Vetores e Geometria (Mat. Aplicada)
+('MAT0101', 'T01', '2025-1', 2025, 1), -- Tópicos de Matemática Elementar (Mat. Pura)
+('MAT1351', 'T01', '2025-1', 2025, 1), -- Cálculo para Funções de Uma Variável I (Mat. Aplicada e Comp.)
 
--- IF (Física)
-('4302112', 'T01', '2025-2026', 2025, 2), -- Física II
-('4302114', 'T01', '2025-2026', 2025, 2), -- Física Experimental II
-('4300208', 'T01', '2025-2026', 2025, 2), -- Introdução à Termodinâmica
-('4300157', 'T01', '2025-2026', 2025, 2), -- Ciência, Educação e Linguagem
-('4300160', 'T01', '2025-2026', 2025, 2), -- Ótica
-('MAT0111', 'T01', '2025-2026', 2025, 2), -- Cálculo Diferencial e Integral I (Licenciatura)
+-- Disciplinas de Computação (MAC)
+('MAC0110', 'T01', '2025-1', 2025, 1), -- Introdução à Computação (Mat. Aplicada)
+('MAC0110', 'T02', '2025-1', 2025, 1), -- Introdução à Computação (Ciênc. Comp.)
+('MAC0110', 'T03', '2025-1', 2025, 1), -- Introdução à Computação (Sist. Info.)
+('MAC0105', 'T01', '2025-1', 2025, 1), -- Fundamentos de Matemática para Computação (Mat. Aplicada e Comp.)
+('MAC0121', 'T01', '2025-1', 2025, 1), -- Algoritmos e Estruturas de Dados I (Ciênc. Comp.)
+('MAC0121', 'T02', '2025-1', 2025, 1), -- Algoritmos e Estruturas de Dados I (Sist. Info.)
+('MAT0103', 'T01', '2025-1', 2025, 1), -- Matemática para Administração (Sist. Info.)
 
--- IAG (Astronomia, Geofísica, Meteorologia)
-('AGG0116', 'T01', '2025-2026', 2025, 2), -- Introdução à Geofísica
-('ACA0116', 'T01', '2025-2026', 2025, 2), -- Introdução às Ciências Atmosféricas I
+-- Disciplinas de Economia e Gestão (EAE/EAD/EAC)
+('EAE0110', 'T01', '2025-1', 2025, 1), -- Fundamentos de Microeconomia (Economia)
+('EAE1101', 'T01', '2025-1', 2025, 1), -- Princípios de Microeconomia (Economia)
+('MAT0146', 'T01', '2025-1', 2025, 1), -- Cálculo Dif e Integral I para Economia (Economia)
+('EAD0912', 'T01', '2025-1', 2025, 1), -- Administração (Administração)
+('EAD0610', 'T01', '2025-1', 2025, 1), -- Fundamentos de Administração (Administração)
+('EAD0610', 'T02', '2025-1', 2025, 1), -- Fundamentos de Administração (GPP)
+('EAC0111', 'T01', '2025-1', 2025, 1), -- Fundamentos de Contabilidade (Administração)
+('EAC0111', 'T02', '2025-1', 2025, 1), -- Fundamentos de Contabilidade (Contábeis)
+('EAC0106', 'T01', '2025-1', 2025, 1), -- Contabilidade Introdutória (Contábeis)
+('DFD0152', 'T01', '2025-1', 2025, 1), -- Instituições de Direito (GPP)
+('DFD0152', 'T02', '2025-1', 2025, 1), -- Instituições de Direito (Contábeis)
+('CRP0350', 'T01', '2025-1', 2025, 1), -- Princípios da Economia Aplicados (GPP)
 
--- IO (Oceanografia)
-('2100102', 'T01', '2025-2026', 2025, 2), -- Sistema Oceano II
-('IOF0283', 'T01', '2025-2026', 2025, 2), -- Oceanografia Geológica I
-('IOB0168', 'T01', '2025-2026', 2025, 2), -- Oceanografia Biológica II
-('QFL1250', 'T01', '2025-2026', 2025, 2), -- Química Analítica
+-- Disciplinas de Arquitetura e Design (AUH/AUP/AUT/MAT)
+('AUH0236', 'T01', '2025-1', 2025, 1), -- História da Urbanização e do Urbanismo I (Arq. Urb.)
+('AUP0608', 'T01', '2025-1', 2025, 1), -- Fundamentos de Projeto (Arq. Urb.)
+('AUT0510', 'T01', '2025-1', 2025, 1), -- Geometria Aplicada à Prod Arquitetônica (Arq. Urb.)
+('MAT0141', 'T01', '2025-1', 2025, 1), -- Matemática para Arquitetura e Urbanismo (Arq. Urb.)
+('AUH2818', 'T01', '2025-1', 2025, 1), -- História da Arte, Arquitetura e Técnicas (Design)
+('AUP2318', 'T01', '2025-1', 2025, 1), -- Linguagens Visuais (Design)
+('AUT2518', 'T01', '2025-1', 2025, 1), -- Materiais e Processos de Produção I (Design)
+('AUP2422', 'T01', '2025-1', 2025, 1), -- Fundamentos do Projeto: Experimentação (Design)
 
--- ECA (Jornalismo e Publicidade)
-('CJE0657', 'T01', '2025-2026', 2025, 2), -- Conceitos e Gêneros do Jornalismo
-('CJE0469', 'T01', '2025-2026', 2025, 2), -- História do Jornalismo I
-('CJE0660', 'T01', '2025-2026', 2025, 2), -- Jornalismo Visual: Fotojornalismo
-('CJE0629', 'T01', '2025-2026', 2025, 2), -- Pesquisa da Comunicação
-('CRP0426', 'T01', '2025-2026', 2025, 2), -- Teoria e Técnica da Publicidade II
-('CRP0435', 'T01', '2025-2026', 2025, 2), -- Mercadologia e Publicidade
-('CCA0288', 'T01', '2025-2026', 2025, 2), -- Linguagem Verbal nos Meios de Comunicação I
-('CRP0421', 'T01', '2025-2026', 2025, 2), -- Estética em Publicidade
+-- Disciplinas de Física e Geociências (4300/4310/1400/AGA/AGG/ACA)
+('4302111', 'T01', '2025-1', 2025, 1), -- Física I (Física Bacharelado)
+('4302111', 'T02', '2025-1', 2025, 1), -- Física I (Astronomia)
+('4302111', 'T03', '2025-1', 2025, 1), -- Física I (Geofísica)
+('4302111', 'T04', '2025-1', 2025, 1), -- Física I (Meteorologia)
+('4302113', 'T01', '2025-1', 2025, 1), -- Física Experimental I (Física Bacharelado)
+('4300151', 'T01', '2025-1', 2025, 1), -- Fundamentos de Mecânica (Física Bacharelado)
+('4310111', 'T01', '2025-1', 2025, 1), -- Física I (Física Licenciatura)
+('4300152', 'T01', '2025-1', 2025, 1), -- Introdução às Medidas em Física (Física Licenciatura)
+('EDM0402', 'T01', '2025-1', 2025, 1), -- Didática (Física Licenciatura)
+('1400101', 'T01', '2025-1', 2025, 1), -- Intro. às Ciências da Terra e Universo (Astronomia)
+('1400101', 'T02', '2025-1', 2025, 1), -- Intro. às Ciências da Terra e Universo (Geofísica)
+('1400101', 'T03', '2025-1', 2025, 1), -- Intro. às Ciências da Terra e Universo (Meteorologia)
+('AGA0100', 'T01', '2025-1', 2025, 1), -- Astronomia: Uma Visão Geral I (Astronomia)
+('AGG0116', 'T01', '2025-1', 2025, 1), -- Introdução à Geofísica (Geofísica)
+('ACA0116', 'T01', '2025-1', 2025, 1), -- Intro. às Ciências Atmosféricas I (Geofísica)
+('ACA0116', 'T02', '2025-1', 2025, 1), -- Intro. às Ciências Atmosféricas I (Meteorologia)
 
--- SEGUNDAS TURMAS (T02) PARA MATÉRIAS SELECIONADAS
+-- Disciplinas de Oceanografia (2100/IOB/QFL)
+('2100101', 'T01', '2025-1', 2025, 1), -- Sistema Oceano I (Oceanografia)
+('IOB0167', 'T01', '2025-1', 2025, 1), -- Oceanografia Biológica I (Oceanografia)
+('QFL1150', 'T01', '2025-1', 2025, 1), -- Química Básica (Oceanografia)
 
--- 1º Semestre (T02) - Disciplinas Fundamentais
-('MAT2453', 'T02', '2025-2026', 2025, 1), -- Cálculo Diferencial e Integral I
-('MAC0110', 'T02', '2025-2026', 2025, 1), -- Introdução à Computação
-('EAC0111', 'T02', '2025-2026', 2025, 1), -- Fundamentos de Contabilidade
-('4302111', 'T02', '2025-2026', 2025, 1), -- Física I
-('CJE0508', 'T02', '2025-2026', 2025, 1), -- Teoria da Comunicação
+-- Disciplinas de Comunicação e Marketing (CJE/CCA/CRP/EAD)
+('CJE0508', 'T01', '2025-1', 2025, 1), -- Teoria da Comunicação (Jornalismo)
+('CJE0587', 'T01', '2025-1', 2025, 1), -- Lab. de Iniciação em Jornalismo (Jornalismo)
+('CJE0518', 'T01', '2025-1', 2025, 1), -- Filosofia (Jornalismo)
+('CCA0255', 'T01', '2025-1', 2025, 1), -- Teoria da Comunicação (Publicidade)
+('CRP0349', 'T01', '2025-1', 2025, 1), -- Teoria e Técnica da Publicidade I (Publicidade)
+('CRP0349', 'T02', '2025-1', 2025, 1), -- Teoria e Técnica da Publicidade I (Mkt. Digital)
+('CCA0258', 'T01', '2025-1', 2025, 1), -- Fundamentos de Sociologia Geral (Publicidade)
+('EAD0541', 'T01', '2025-1', 2025, 1), -- Fundamentos de Marketing (Mkt. Digital)
+('EAD0745', 'T01', '2025-1', 2025, 1), -- Marketing I: Conceitos e Estratégias (Mkt. Digital)
 
--- 2º Semestre (T02) - Continuações e Tronco Comum
-('MAT2454', 'T02', '2025-2026', 2025, 2), -- Cálculo Diferencial e Integral II
-('MAT0122', 'T02', '2025-2026', 2025, 2), -- Algebra Linear I
-('4302112', 'T02', '2025-2026', 2025, 2), -- Física II
-('EAE1102', 'T02', '2025-2026', 2025, 2), -- Princípios de Macroeconomia
-('EAD0616', 'T02', '2025-2026', 2025, 2); -- Teoria das Organizações
+
+-- =================================================================
+-- 2º SEMESTRE (semestre = 2) - Vigência '2025-2'
+-- =================================================================
+
+-- Disciplinas de Estatística (EST)
+('MAE0212', 'T01', '2025-2', 2025, 2), -- Introdução à Prob e Estatística II (Estatística)
+('MAE0225', 'T01', '2025-2', 2025, 2), -- Introdução a Inferência (Estatística)
+('MAT3211', 'T01', '2025-2', 2025, 2), -- Cálculo II para Estatística (Estatística)
+
+-- Disciplinas de Matemática (MAT/MAP)
+('MAT2454', 'T01', '2025-2', 2025, 2), -- Cálculo Diferencial e Integral II (Mat. Pura)
+('MAT2454', 'T02', '2025-2', 2025, 2), -- Cálculo Diferencial e Integral II (Mat. Aplicada)
+('MAT0122', 'T01', '2025-2', 2025, 2), -- Álgebra Linear I (Mat. Pura)
+('MAT0122', 'T02', '2025-2', 2025, 2), -- Álgebra Linear I (Mat. Aplicada)
+('MAT0164', 'T01', '2025-2', 2025, 2), -- Teoria Elementar dos Números (Mat. Pura)
+('MAP2110', 'T01', '2025-2', 2025, 2), -- Introdução aos Modelos Lineares (Mat. Aplicada)
+('MAT1352', 'T01', '2025-2', 2025, 2), -- Cálculo para Funções de Uma Variável II (Mat. Aplicada e Comp.)
+
+-- Disciplinas de Computação (MAC)
+('MAC0329', 'T01', '2025-2', 2025, 2), -- Álgebra Booleana e Aplicações (Mat. Aplicada e Comp.)
+('MAC0122', 'T01', '2025-2', 2025, 2), -- Princípios de Desenv. de Algoritmos (Ciênc. Comp.)
+('MAC0122', 'T02', '2025-2', 2025, 2), -- Princípios de Desenv. de Algoritmos (Sist. Info.)
+('MAC0239', 'T01', '2025-2', 2025, 2), -- Introdução à Lógica e Verificação (Sist. Info.)
+('MAE0116', 'T01', '2025-2', 2025, 2), -- Noções de Estatística (Sist. Info.)
+('MAC0126', 'T01', '2025-2', 2025, 2), -- Técnicas de Programação I (Ciênc. Comp.)
+
+-- Disciplinas de Economia e Gestão (EAE/EAD/EAC)
+('EAE0111', 'T01', '2025-2', 2025, 2), -- Fundamentos de Macroeconomia (Economia)
+('EAE1102', 'T01', '2025-2', 2025, 2), -- Princípios de Macroeconomia (Economia)
+('EAE1104', 'T01', '2025-2', 2025, 2), -- Álgebra Linear para Economia (Economia)
+('MAT0147', 'T01', '2025-2', 2025, 2), -- Cálculo Dif e Integral II para Economia (Economia)
+('EAD0616', 'T01', '2025-2', 2025, 2), -- Teoria das Organizações (Administração)
+('EAD0616', 'T02', '2025-2', 2025, 2), -- Teoria das Organizações (GPP)
+('EAD0745', 'T01', '2025-2', 2025, 2), -- Marketing I: Conceitos e Estratégias (Administração)
+('EAC0208', 'T01', '2025-2', 2025, 2), -- Matemática Financeira (Administração)
+('EAC0205', 'T01', '2025-2', 2025, 2), -- Custos para Decisão e Controle (Contábeis)
+('EAC0206', 'T01', '2025-2', 2025, 2), -- Contabilidade de Custos (Contábeis)
+('EAC0208', 'T02', '2025-2', 2025, 2), -- Matemática Financeira (Contábeis)
+('EAC0480', 'T01', '2025-2', 2025, 2), -- Contabilidade Intermediária I (Contábeis)
+('CJE0517', 'T01', '2025-2', 2025, 2), -- História do Pensamento Político (GPP)
+('EAE1233', 'T01', '2025-2', 2025, 2), -- Formação Econômica e Social do Brasil (GPP)
+
+-- Disciplinas de Arquitetura e Design (AUH/AUP/AUT/PCC)
+('AUH0158', 'T01', '2025-2', 2025, 2), -- História e Teorias da Arquitetura I (Arq. Urb.)
+('AUP0344', 'T01', '2025-2', 2025, 2), -- Linguagens Visuais Gráficas e Ambientais (Arq. Urb.)
+('AUT0182', 'T01', '2025-2', 2025, 2), -- Construção do Edifício 1 (Arq. Urb.)
+('PCC0201', 'T01', '2025-2', 2025, 2), -- Geometria Descritiva (Arq. Urb.)
+('AUH2806', 'T01', '2025-2', 2025, 2), -- História do Design I (Design)
+('AUH2502', 'T01', '2025-2', 2025, 2), -- Fundamentos Sociais do Design (Design)
+('AUP2320', 'T01', '2025-2', 2025, 2), -- Tipografia (Design)
+('AUP2424', 'T01', '2025-2', 2025, 2), -- Estratégias Analógicas de Projeto (Design)
+
+-- Disciplinas de Física e Geociências (4300/4310/AGG/ACA)
+('4302112', 'T01', '2025-2', 2025, 2), -- Física II (Física Bacharelado)
+('4302112', 'T02', '2025-2', 2025, 2), -- Física II (Astronomia)
+('4302114', 'T01', '2025-2', 2025, 2), -- Física Experimental II (Física Bacharelado)
+('4300208', 'T01', '2025-2', 2025, 2), -- Introdução à Termodinâmica (Física Bacharelado)
+('4300157', 'T01', '2025-2', 2025, 2), -- Ciência, Educação e Linguagem (Física Licenciatura)
+('4300160', 'T01', '2025-2', 2025, 2), -- Ótica (Física Licenciatura)
+('MAT0111', 'T01', '2025-2', 2025, 2), -- Cálculo Diferencial e Integral I (Física Licenciatura)
+('AGG0116', 'T01', '2025-2', 2025, 2), -- Introdução à Geofísica (Astronomia)
+('AGG0116', 'T02', '2025-2', 2025, 2), -- Introdução à Geofísica (Meteorologia)
+('ACA0116', 'T01', '2025-2', 2025, 2), -- Intro. às Ciências Atmosféricas I (Astronomia)
+('4302111', 'T05', '2025-2', 2025, 2), -- Física I (Geofísica) - *Reoferta para 2º Semestre*
+('4302111', 'T06', '2025-2', 2025, 2), -- Física I (Meteorologia) - *Reoferta para 2º Semestre*
+
+-- Disciplinas de Oceanografia (2100/IOF/IOB/QFL)
+('2100102', 'T01', '2025-2', 2025, 2), -- Sistema Oceano II (Oceanografia)
+('IOF0283', 'T01', '2025-2', 2025, 2), -- Oceanografia Geológica I (Oceanografia)
+('IOB0168', 'T01', '2025-2', 2025, 2), -- Oceanografia Biológica II (Oceanografia)
+('QFL1250', 'T01', '2025-2', 2025, 2), -- Química Analítica (Oceanografia)
+
+-- Disciplinas de Comunicação e Marketing (CJE/CRP/CCA)
+('CJE0657', 'T01', '2025-2', 2025, 2), -- Conceitos e Gêneros do Jornalismo (Jornalismo)
+('CJE0469', 'T01', '2025-2', 2025, 2), -- História do Jornalismo I (Jornalismo)
+('CJE0660', 'T01', '2025-2', 2025, 2), -- Jornalismo Visual: Fotojornalismo (Jornalismo)
+('CJE0660', 'T02', '2025-2', 2025, 2), -- Jornalismo Visual: Fotojornalismo (Mkt. Digital)
+('CJE0629', 'T01', '2025-2', 2025, 2), -- Pesquisa da Comunicação (Jornalismo)
+('CRP0426', 'T01', '2025-2', 2025, 2), -- Teoria e Técnica da Publicidade II (Publicidade)
+('CRP0435', 'T01', '2025-2', 2025, 2), -- Mercadologia e Publicidade (Publicidade)
+('CCA0288', 'T01', '2025-2', 2025, 2), -- Linguagem Verbal nos Meios de Comunicação I (Publicidade)
+('CRP0421', 'T01', '2025-2', 2025, 2), -- Estética em Publicidade (Publicidade)
+('CRP0322', 'T01', '2025-2', 2025, 2), -- Ética e Legislação Publicitária (Mkt. Digital)
+('CRP0292', 'T01', '2025-2', 2025, 2); -- Estudo da Defesa do Consumidor (Mkt. Digital)
 
 -- tabela participa_em
 CREATE TABLE participa_em (
@@ -959,6 +1001,209 @@ CREATE TABLE grade (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+INSERT INTO grade (tipo_disciplina, id_curso, sigla_disciplina) VALUES
+-- 1. Bacharelado em Estatística (Integral)
+(1, 1, 'MAE0121'),
+(1, 1, 'MAE0111'),
+(1, 1, 'MAT2453'),
+(1, 1, 'MAT0112'),
+(1, 1, 'MAE0212'),
+(1, 1, 'MAE0127'),
+(1, 1, 'MAE0225'),
+(1, 1, 'MAT3211'),
+
+-- 2. Bacharelado em Matemática Pura (Matutino)
+(1, 2, 'MAT2453'),
+(1, 2, 'MAT0112'),
+(1, 2, 'MAT0101'), -- Tópicos de Matemática Elementar
+(1, 2, 'MAT2454'),
+(1, 2, 'MAT0122'),
+(1, 2, 'MAT0164'),
+
+-- 3. Bacharelado em Matemática Aplicada (Integral)
+(1, 3, 'MAT2453'),
+(1, 3, 'MAT0112'),
+(1, 3, 'MAC0110'),
+(1, 3, 'MAT2454'),
+(1, 3, 'MAT0122'),
+(1, 3, 'MAP2110'),
+
+-- 4. Bacharelado em Matemática Aplicada e Computacional (Noturno)
+(1, 4, 'MAT1351'),
+(1, 4, 'MAC0110'),
+(1, 4, 'MAC0105'),
+(1, 4, 'MAT1352'),
+(1, 4, 'MAT0122'),
+(1, 4, 'MAC0329'),
+
+-- 5. Bacharelado em Ciência da Computação (Integral)
+(1, 5, 'MAC0110'),
+(1, 5, 'MAC0121'),
+(1, 5, 'MAT2453'),
+(1, 5, 'MAC0122'),
+(1, 5, 'MAC0126'),
+(1, 5, 'MAT2454'),
+
+-- 6. Bacharelado em Economia (Matutino)
+(1, 6, 'EAE0110'),
+(1, 6, 'EAE1101'),
+(1, 6, 'MAT0146'),
+(1, 6, 'EAE0111'),
+(1, 6, 'EAE1102'),
+(1, 6, 'EAE1104'),
+(1, 6, 'MAT0147'),
+
+-- 7. Bacharelado em Administração (Noturno)
+(1, 7, 'EAD0912'),
+(1, 7, 'EAD0610'),
+(1, 7, 'EAC0111'),
+(1, 7, 'EAD0616'),
+(1, 7, 'EAD0745'),
+(1, 7, 'EAC0208'),
+
+-- 8. Bacharelado em Ciências Contábeis (Noturno)
+(1, 8, 'EAC0111'),
+(1, 8, 'EAC0106'),
+(1, 8, 'DFD0152'),
+(1, 8, 'EAC0205'),
+(1, 8, 'EAC0206'),
+(1, 8, 'EAC0217'),
+(1, 8, 'EAC0480'),
+
+-- 9. Bacharelado em Arquitetura e Urbanismo (Integral)
+(1, 9, 'AUH0236'),
+(1, 9, 'AUP0608'),
+(1, 9, 'AUT0510'),
+(1, 9, 'MAT0141'),
+(1, 9, 'AUH0158'),
+(1, 9, 'AUP0344'),
+(1, 9, 'AUT0182'),
+(1, 9, 'PCC0201'),
+
+-- 10. Design (Noturno)
+(1, 10, 'AUH2818'),
+(1, 10, 'AUP2318'),
+(1, 10, 'AUT2518'),
+(1, 10, 'AUP2422'),
+(1, 10, 'AUH2806'),
+(1, 10, 'AUH2502'),
+(1, 10, 'AUP2320'),
+(1, 10, 'AUP2424'),
+
+-- 11. Bacharelado em Física (Integral)
+(1, 11, '4302111'),
+(1, 11, '4302113'),
+(1, 11, '4300151'),
+(1, 11, 'MAT2453'),
+(1, 11, '4302112'),
+(1, 11, '4302114'),
+(1, 11, '4300208'),
+(1, 11, 'MAT2454'),
+
+-- 12. Licenciatura em Física (Noturno)
+(1, 12, '4310111'),
+(1, 12, '4300152'),
+(1, 12, 'EDM0402'),
+(1, 12, '4300157'),
+(1, 12, '4300160'),
+(1, 12, 'MAT0111'),
+
+-- 13. Bacharelado em Física (Noturno) - Duplicado do ID 11
+(1, 13, '4302111'),
+(1, 13, '4302113'),
+(1, 13, '4300151'),
+(1, 13, 'MAT2453'),
+(1, 13, '4302112'),
+(1, 13, '4302114'),
+(1, 13, '4300208'),
+(1, 13, 'MAT2454'),
+
+-- 14. Bacharelado em Astronomia (Matutino)
+(1, 14, '1400101'),
+(1, 14, 'AGA0100'),
+(1, 14, '4302111'),
+(1, 14, 'AGG0116'),
+(1, 14, 'ACA0116'),
+(1, 14, '4302112'),
+
+-- 15. Bacharelado em Geofísica (Integral)
+(1, 15, 'AGG0116'),
+(1, 15, '1400101'),
+(1, 15, 'MAT2453'),
+(1, 15, 'ACA0116'),
+(1, 15, '4302111'),
+(1, 15, 'MAT2454'),
+
+-- 16. Bacharelado em Meteorologia (Matutino)
+(1, 16, 'ACA0116'),
+(1, 16, '1400101'),
+(1, 16, 'MAT2453'),
+(1, 16, '4302111'),
+(1, 16, 'AGG0116'),
+(1, 16, 'MAT2454'),
+
+-- 17. Bacharelado em Oceanografia (Integral)
+(1, 17, '2100101'),
+(1, 17, 'IOB0167'),
+(1, 17, 'QFL1150'),
+(1, 17, '2100102'),
+(1, 17, 'IOF0283'),
+(1, 17, 'IOB0168'),
+(1, 17, 'QFL1250'),
+
+-- 18. Bacharelado em Oceanografia (Noturno) - Duplicado do ID 17
+(1, 18, '2100101'),
+(1, 18, 'IOB0167'),
+(1, 18, 'QFL1150'),
+(1, 18, '2100102'),
+(1, 18, 'IOF0283'),
+(1, 18, 'IOB0168'),
+(1, 18, 'QFL1250'),
+
+-- 19. Bacharelado em Jornalismo (Matutino)
+(1, 19, 'CJE0508'),
+(1, 19, 'CJE0587'),
+(1, 19, 'CJE0518'),
+(1, 19, 'CJE0657'),
+(1, 19, 'CJE0469'),
+(1, 19, 'CJE0660'),
+(1, 19, 'CJE0629'),
+
+-- 20. Bacharelado em Publicidade e Propaganda (Integral)
+(1, 20, 'CCA0255'),
+(1, 20, 'CRP0349'),
+(1, 20, 'CCA0258'),
+(1, 20, 'CRP0426'),
+(1, 20, 'CRP0435'),
+(1, 20, 'CCA0288'),
+(1, 20, 'CRP0421'),
+
+-- 21. Bacharelado em Gestão de Políticas Públicas (Matutino)
+(1, 21, 'EAD0610'),
+(1, 21, 'DFD0152'),
+(1, 21, 'CRP0350'),
+(1, 21, 'EAD0616'),
+(1, 21, 'CJE0517'),
+(1, 21, 'EAE1233'),
+
+-- 22. Bacharelado em Sistemas de Informação (Noturno)
+(1, 22, 'MAC0110'),
+(1, 22, 'MAC0121'),
+(1, 22, 'MAT0103'),
+(1, 22, 'MAC0122'),
+(1, 22, 'MAC0239'),
+(1, 22, 'MAE0116'),
+
+-- 23. Tecnológico em Marketing Digital (Noturno)
+(1, 23, 'EAD0541'),
+(1, 23, 'EAD0745'),
+(1, 23, 'CRP0349'),
+(1, 23, 'CRP0322'),
+(1, 23, 'CJE0660'),
+(1, 23, 'CRP0292');
+
+
 -- tabela requisito
 CREATE TABLE requisito (
     sigla_disciplina_requerente VARCHAR(20) NOT NULL,
@@ -970,15 +1215,229 @@ CREATE TABLE requisito (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+INSERT INTO requisito (sigla_disciplina_requerente, sigla_disciplina_requerida) VALUES
+-- =================================================================
+-- REQUISITOS DE MATEMÁTICA E CÁLCULO (Sequência e Base)
+-- =================================================================
+-- Cálculo II (MAT2454) requer a base de Cálculo I e de Álgebra Linear/Vetores
+('MAT2454', 'MAT2453'), -- Cálculo Diferencial e Integral II requer I
+('MAT2454', 'MAT0112'), -- Cálculo Diferencial e Integral II requer Vetores e Geometria
+-- Cálculo II (Estatística) requer a base geral
+('MAT3211', 'MAT2453'), 
+('MAT3211', 'MAT0112'), 
+-- Cálculo II (Mat. Aplicada e Computacional)
+('MAT1352', 'MAT1351'), 
+-- Cálculo II (Economia)
+('MAT0147', 'MAT0146'), 
+-- Álgebra Linear requer a base de Vetores
+('MAT0122', 'MAT0112'), 
+-- Modelos Lineares (MAP2110) requer a base de Cálculo e Vetores
+('MAP2110', 'MAT2453'),
+('MAP2110', 'MAT0112'),
+
+
+-- =================================================================
+-- REQUISITOS DE PROBABILIDADE E ESTATÍSTICA (Sequência e Base)
+-- =================================================================
+-- Continuação I -> II
+('MAE0212', 'MAE0121'), -- Introdução à Prob e Estatística II requer I
+-- Inferência Estatística (MAE0225) requer ambas as bases do 1º Semestre
+('MAE0225', 'MAE0127'), -- Requer Probabilidade I
+('MAE0225', 'MAE0121'), -- Requer Introdução à Prob e Estatística I
+-- Noções de Estatística (MAE0116, para SI) requer base de Matemática
+('MAE0116', 'MAT0103'), -- Requer Matemática para Administração
+
+
+-- =================================================================
+-- REQUISITOS DE COMPUTAÇÃO (Sequência e Base)
+-- =================================================================
+-- Princípios de Desenvolvimento de Algoritmos requer a primeira etapa
+('MAC0122', 'MAC0121'), -- Princípios de Desenv. de Algoritmos requer Algoritmos e Estruturas de Dados I
+-- Técnicas de Programação I (MAC0126) requer as bases de programação e computação
+('MAC0126', 'MAC0121'),
+('MAC0126', 'MAC0110'),
+-- Lógica e Verificação (MAC0239) requer a base de Algoritmos
+('MAC0239', 'MAC0121'),
+-- Álgebra Booleana (MAC0329) requer a base de Fundamentos de Matemática para Computação
+('MAC0329', 'MAC0105'),
+
+
+-- =================================================================
+-- REQUISITOS DE FÍSICA E GEOCIÊNCIAS (Sequência e Base)
+-- =================================================================
+-- Continuação I -> II
+('4302112', '4302111'), -- Física II requer Física I
+('4302114', '4302113'), -- Física Experimental II requer I
+-- Física II requer base em Cálculo I para o conteúdo de Eletromagnetismo
+('4302112', 'MAT2453'), 
+-- Termodinâmica (4300208) requer a base em Mecânica/Física I
+('4300208', '4302111'), 
+
+
+-- =================================================================
+-- REQUISITOS DE OCEANOGRAFIA (Sequência e Base Química)
+-- =================================================================
+-- Continuação I -> II
+('2100102', '2100101'), 
+('IOB0168', 'IOB0167'), 
+-- Base Química para disciplinas avançadas
+('QFL1250', 'QFL1150'), -- Química Analítica requer Química Básica
+('IOF0283', 'QFL1150'), -- Oceanografia Geológica I requer Química Básica
+
+
+-- =================================================================
+-- REQUISITOS DE ECONOMIA E GESTÃO (Sequência e Base)
+-- =================================================================
+-- Continuação Micro -> Macro
+('EAE0111', 'EAE0110'), 
+('EAE1102', 'EAE1101'), 
+-- Álgebra Linear para Economia (EAE1104) requer as duas bases principais
+('EAE1104', 'MAT0146'), -- Requer Cálculo I
+('EAE1104', 'EAE1101'), -- Requer Princípios de Microeconomia
+-- Teoria das Organizações requer a base de Administração
+('EAD0616', 'EAD0610'), 
+-- Disciplinas de Contabilidade avançada requerem a base contábil introdutória
+('EAC0205', 'EAC0111'), 
+('EAC0205', 'EAC0106'),
+('EAC0206', 'EAC0111'), 
+('EAC0206', 'EAC0106'),
+('EAC0480', 'EAC0111'),
+('EAC0480', 'EAC0106'),
+
+
+-- =================================================================
+-- REQUISITOS DE COMUNICAÇÃO (Sequência e Base Teórica)
+-- =================================================================
+-- Continuação em Publicidade
+('CRP0426', 'CRP0349'), -- Teoria e Técnica da Publicidade II requer I
+-- Jornalismo e Teoria
+('CJE0657', 'CJE0508'), -- Conceitos e Gêneros do Jornalismo requer Teoria da Comunicação
+('CJE0469', 'CJE0508'); -- História do Jornalismo I requer Teoria da Comunicação
+
 -- tabela sala
+DROP TABLE IF EXISTS  sala CASCADE;
 CREATE TABLE sala (
-    id_sala SERIAL PRIMARY KEY,
+    id_sala VARCHAR(4) , --- (LETRANÚMERO)
     lot_max INTEGER,
     descricao VARCHAR(240),
     id_instituto INTEGER,
+	PRIMARY KEY(id_sala, id_instituto),
     FOREIGN KEY (id_instituto) REFERENCES instituto(id_instituto)
         ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+-- ATENÇÃO: Assumimos que o tipo da coluna id_sala foi alterado para VARCHAR para suportar o formato 'A1', 'B20', etc.
+TRUNCATE TABLE sala CASCADE;
+INSERT INTO sala (id_sala, lot_max, descricao, id_instituto) VALUES
+-- =================================================================
+-- IME (ID 1) - Total: 50 Salas (A:10, B:35, C:5)
+-- =================================================================
+-- BLOCO A (10 Salas)
+('A1', 45, NULL, 1), ('A2', 32, NULL, 1), ('A3', 58, NULL, 1), ('A4', 25, NULL, 1), ('A5', 40, NULL, 1), 
+('A6', 30, NULL, 1), ('A7', 55, NULL, 1), ('A8', 21, NULL, 1), ('A9', 42, NULL, 1), ('A10', 38, NULL, 1), 
+-- BLOCO B (35 Salas)
+('B1', 60, NULL, 1), ('B2', 28, NULL, 1), ('B3', 49, NULL, 1), ('B4', 35, NULL, 1), ('B5', 52, NULL, 1), 
+('B6', 22, NULL, 1), ('B7', 44, NULL, 1), ('B8', 31, NULL, 1), ('B9', 57, NULL, 1), ('B10', 26, NULL, 1), 
+('B11', 47, NULL, 1), ('B12', 39, NULL, 1), ('B13', 54, NULL, 1), ('B14', 23, NULL, 1), ('B15', 41, NULL, 1), 
+('B16', 33, NULL, 1), ('B17', 59, NULL, 1), ('B18', 20, NULL, 1), ('B19', 46, NULL, 1), ('B20', 34, NULL, 1), 
+('B21', 50, NULL, 1), ('B22', 27, NULL, 1), ('B23', 43, NULL, 1), ('B24', 36, NULL, 1), ('B25', 53, NULL, 1), 
+('B26', 29, NULL, 1), ('B27', 48, NULL, 1), ('B28', 37, NULL, 1), ('B29', 51, NULL, 1), ('B30', 24, NULL, 1), 
+('B31', 60, NULL, 1), ('B32', 25, NULL, 1), ('B33', 40, NULL, 1), ('B34', 30, NULL, 1), ('B35', 55, NULL, 1), 
+-- BLOCO C (5 Salas)
+('C1', 45, NULL, 1), ('C2', 22, NULL, 1), ('C3', 38, NULL, 1), ('C4', 50, NULL, 1), ('C5', 35, NULL, 1), 
+
+-- =================================================================
+-- FEA (ID 2) - Total: 100 Salas (A:20, B:70, C:10)
+-- =================================================================
+-- BLOCO A (20 Salas)
+('A1', 40, NULL, 2), ('A2', 30, NULL, 2), ('A3', 50, NULL, 2), ('A4', 25, NULL, 2), ('A5', 60, NULL, 2), 
+('A6', 35, NULL, 2), ('A7', 48, NULL, 2), ('A8', 22, NULL, 2), ('A9', 52, NULL, 2), ('A10', 38, NULL, 2), 
+('A11', 45, NULL, 2), ('A12', 28, NULL, 2), ('A13', 59, NULL, 2), ('A14', 31, NULL, 2), ('A15', 42, NULL, 2), 
+('A16', 20, NULL, 2), ('A17', 50, NULL, 2), ('A18', 33, NULL, 2), ('A19', 47, NULL, 2), ('A20', 24, NULL, 2), 
+-- BLOCO B (70 Salas)
+('B1', 56, NULL, 2), ('B2', 39, NULL, 2), ('B3', 41, NULL, 2), ('B4', 26, NULL, 2), ('B5', 53, NULL, 2), 
+('B6', 32, NULL, 2), ('B7', 44, NULL, 2), ('B8', 29, NULL, 2), ('B9', 58, NULL, 2), ('B10', 37, NULL, 2), 
+('B11', 49, NULL, 2), ('B12', 21, NULL, 2), ('B13', 54, NULL, 2), ('B14', 36, NULL, 2), ('B15', 46, NULL, 2), 
+('B16', 23, NULL, 2), ('B17', 57, NULL, 2), ('B18', 34, NULL, 2), ('B19', 43, NULL, 2), ('B20', 27, NULL, 2), 
+('B21', 51, NULL, 2), ('B22', 30, NULL, 2), ('B23', 40, NULL, 2), ('B24', 25, NULL, 2), ('B25', 60, NULL, 2), 
+('B26', 35, NULL, 2), ('B27', 48, NULL, 2), ('B28', 22, NULL, 2), ('B29', 52, NULL, 2), ('B30', 38, NULL, 2), 
+('B31', 45, NULL, 2), ('B32', 28, NULL, 2), ('B33', 59, NULL, 2), ('B34', 31, NULL, 2), ('B35', 42, NULL, 2), 
+('B36', 20, NULL, 2), ('B37', 50, NULL, 2), ('B38', 33, NULL, 2), ('B39', 47, NULL, 2), ('B40', 24, NULL, 2), 
+('B41', 56, NULL, 2), ('B42', 39, NULL, 2), ('B43', 41, NULL, 2), ('B44', 26, NULL, 2), ('B45', 53, NULL, 2), 
+('B46', 32, NULL, 2), ('B47', 44, NULL, 2), ('B48', 29, NULL, 2), ('B49', 58, NULL, 2), ('B50', 37, NULL, 2), 
+('B51', 49, NULL, 2), ('B52', 21, NULL, 2), ('B53', 54, NULL, 2), ('B54', 36, NULL, 2), ('B55', 46, NULL, 2), 
+('B56', 23, NULL, 2), ('B57', 57, NULL, 2), ('B58', 34, NULL, 2), ('B59', 43, NULL, 2), ('B60', 27, NULL, 2), 
+('B61', 51, NULL, 2), ('B62', 40, NULL, 2), ('B63', 30, NULL, 2), ('B64', 25, NULL, 2), ('B65', 60, NULL, 2), 
+('B66', 35, NULL, 2), ('B67', 55, NULL, 2), ('B68', 45, NULL, 2), ('B69', 20, NULL, 2), ('B70', 50, NULL, 2), 
+-- BLOCO C (10 Salas)
+('C1', 33, NULL, 2), ('C2', 47, NULL, 2), ('C3', 24, NULL, 2), ('C4', 56, NULL, 2), ('C5', 39, NULL, 2), 
+('C6', 41, NULL, 2), ('C7', 26, NULL, 2), ('C8', 53, NULL, 2), ('C9', 32, NULL, 2), ('C10', 44, NULL, 2), 
+
+-- =================================================================
+-- FAU (ID 3) - Total: 30 Salas (A:6, B:21, C:3)
+-- =================================================================
+-- BLOCO A (6 Salas)
+('A1', 40, NULL, 3), ('A2', 25, NULL, 3), ('A3', 55, NULL, 3), ('A4', 35, NULL, 3), ('A5', 48, NULL, 3), ('A6', 22, NULL, 3), 
+-- BLOCO B (21 Salas)
+('B1', 59, NULL, 3), ('B2', 31, NULL, 3), ('B3', 42, NULL, 3), ('B4', 20, NULL, 3), ('B5', 50, NULL, 3), 
+('B6', 33, NULL, 3), ('B7', 47, NULL, 3), ('B8', 24, NULL, 3), ('B9', 56, NULL, 3), ('B10', 39, NULL, 3), 
+('B11', 41, NULL, 3), ('B12', 26, NULL, 3), ('B13', 53, NULL, 3), ('B14', 32, NULL, 3), ('B15', 44, NULL, 3), 
+('B16', 29, NULL, 3), ('B17', 58, NULL, 3), ('B18', 37, NULL, 3), ('B19', 49, NULL, 3), ('B20', 21, NULL, 3), 
+('B21', 54, NULL, 3),
+-- BLOCO C (3 Salas)
+('C1', 36, NULL, 3), ('C2', 46, NULL, 3), ('C3', 23, NULL, 3),
+
+-- =================================================================
+-- IF (ID 4) - Total: 25 Salas (A:5, B:18, C:2)
+-- =================================================================
+-- BLOCO A (5 Salas)
+('A1', 50, NULL, 4), ('A2', 30, NULL, 4), ('A3', 45, NULL, 4), ('A4', 20, NULL, 4), ('A5', 60, NULL, 4), 
+-- BLOCO B (18 Salas)
+('B1', 35, NULL, 4), ('B2', 48, NULL, 4), ('B3', 22, NULL, 4), ('B4', 52, NULL, 4), ('B5', 38, NULL, 4), 
+('B6', 45, NULL, 4), ('B7', 28, NULL, 4), ('B8', 59, NULL, 4), ('B9', 31, NULL, 4), ('B10', 42, NULL, 4), 
+('B11', 20, NULL, 4), ('B12', 50, NULL, 4), ('B13', 33, NULL, 4), ('B14', 47, NULL, 4), ('B15', 24, NULL, 4), 
+('B16', 56, NULL, 4), ('B17', 39, NULL, 4), ('B18', 41, NULL, 4),
+-- BLOCO C (2 Salas)
+('C1', 26, NULL, 4), ('C2', 53, NULL, 4),
+
+-- =================================================================
+-- IAG (ID 5) - Total: 30 Salas (A:6, B:21, C:3)
+-- =================================================================
+-- BLOCO A (6 Salas)
+('A1', 45, NULL, 5), ('A2', 28, NULL, 5), ('A3', 55, NULL, 5), ('A4', 32, NULL, 5), ('A5', 40, NULL, 5), ('A6', 21, NULL, 5), 
+-- BLOCO B (21 Salas)
+('B1', 58, NULL, 5), ('B2', 35, NULL, 5), ('B3', 49, NULL, 5), ('B4', 24, NULL, 5), ('B5', 52, NULL, 5), 
+('B6', 37, NULL, 5), ('B7', 44, NULL, 5), ('B8', 29, NULL, 5), ('B9', 56, NULL, 5), ('B10', 31, NULL, 5), 
+('B11', 43, NULL, 5), ('B12', 20, NULL, 5), ('B13', 60, NULL, 5), ('B14', 38, NULL, 5), ('B15', 46, NULL, 5), 
+('B16', 25, NULL, 5), ('B17', 50, NULL, 5), ('B18', 33, NULL, 5), ('B19', 47, NULL, 5), ('B20', 22, NULL, 5), 
+('B21', 59, NULL, 5),
+-- BLOCO C (3 Salas)
+('C1', 36, NULL, 5), ('C2', 41, NULL, 5), ('C3', 27, NULL, 5),
+
+-- =================================================================
+-- IO (ID 6) - Total: 28 Salas (A:6, B:20, C:2)
+-- =================================================================
+-- BLOCO A (6 Salas)
+('A1', 30, NULL, 6), ('A2', 55, NULL, 6), ('A3', 40, NULL, 6), ('A4', 25, NULL, 6), ('A5', 60, NULL, 6), ('A6', 35, NULL, 6), 
+-- BLOCO B (20 Salas)
+('B1', 48, NULL, 6), ('B2', 22, NULL, 6), ('B3', 52, NULL, 6), ('B4', 38, NULL, 6), ('B5', 45, NULL, 6), 
+('B6', 28, NULL, 6), ('B7', 59, NULL, 6), ('B8', 31, NULL, 6), ('B9', 42, NULL, 6), ('B10', 20, NULL, 6), 
+('B11', 50, NULL, 6), ('B12', 33, NULL, 6), ('B13', 47, NULL, 6), ('B14', 24, NULL, 6), ('B15', 56, NULL, 6), 
+('B16', 39, NULL, 6), ('B17', 41, NULL, 6), ('B18', 26, NULL, 6), ('B19', 53, NULL, 6), ('B20', 32, NULL, 6), 
+-- BLOCO C (2 Salas)
+('C1', 44, NULL, 6), ('C2', 29, NULL, 6),
+
+-- =================================================================
+-- ECA (ID 7) - Total: 20 Salas (A:4, B:14, C:2)
+-- =================================================================
+-- BLOCO A (4 Salas)
+('A1', 40, NULL, 7), ('A2', 25, NULL, 7), ('A3', 55, NULL, 7), ('A4', 35, NULL, 7), 
+-- BLOCO B (14 Salas)
+('B1', 48, NULL, 7), ('B2', 22, NULL, 7), ('B3', 59, NULL, 7), ('B4', 31, NULL, 7), ('B5', 42, NULL, 7), 
+('B6', 20, NULL, 7), ('B7', 50, NULL, 7), ('B8', 33, NULL, 7), ('B9', 47, NULL, 7), ('B10', 24, NULL, 7), 
+('B11', 56, NULL, 7), ('B12', 39, NULL, 7), ('B13', 41, NULL, 7), ('B14', 26, NULL, 7), 
+-- BLOCO C (2 Salas)
+('C1', 53, NULL, 7), ('C2', 32, NULL, 7);
 
 -- tabela avaliacao_sala
 CREATE TABLE avaliacao_sala (
