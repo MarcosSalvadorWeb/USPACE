@@ -2,7 +2,7 @@
 
 -- tabela usuario
 --- DROP TABLE usuario CASCADE;
---- TRUNCATE TABLE usuario CASCADE;
+TRUNCATE TABLE usuario CASCADE;
 CREATE TABLE usuario (
     email VARCHAR(150) UNIQUE NOT NULL,
     senha VARCHAR(50) NOT NULL,
@@ -172,8 +172,10 @@ INSERT INTO usuario (email, senha, nusp, rg, foto, nome, pnome, unome) VALUES
 --- Corrigir sala dos professores e retirar salas de funcionários 
 --- Colocar mais professores 
 
---- Insert 50 professores
 INSERT INTO usuario (email, senha, nusp, rg, foto, nome, pnome, unome) VALUES
+-- =================================================================
+-- BLOCO 1 (PROFESSORES ORIGINAIS)
+-- =================================================================
 ('prof_monteiro@usp.br', '389Twy0dQc', 43276, '802776938', NULL, 'Alice Monteiro', 'Alice', 'Monteiro'),
 ('prof_albuquerque@usp.br', 'd2iMyxO3k4', 33527, '403978236', NULL, 'Bernardo Albuquerque', 'Bernardo', 'Albuquerque'),
 ('prof_cardoso@usp.br', '4f4noppKqf', 29064, '878417139', NULL, 'Camila Cardoso', 'Camila', 'Cardoso'),
@@ -224,59 +226,167 @@ INSERT INTO usuario (email, senha, nusp, rg, foto, nome, pnome, unome) VALUES
 ('prof_carvalho1@usp.br', 'qNRZ75bds1', 89806, '294184923', NULL, 'Joana Carvalho', 'Joana', 'Carvalho'),
 ('prof_almeida@usp.br', '5FtgfAIm94', 68622, '271454456', NULL, 'Kauê Almeida', 'Kauê', 'Almeida'),
 ('prof_tavares1@usp.br', 'xC1DzhZ73a', 92623, '495443550', NULL, 'Larissa Tavares', 'Larissa', 'Tavares'),
+-- =================================================================
+-- BLOCO 2 (70 PROFESSORES ADICIONAIS - AJUSTADOS)
+-- =================================================================
+('prof_motta1@usp.br', 'kP8sA4jZt1', 12345, '111223344', NULL, 'Márcia Motta', 'Márcia', 'Motta'), -- E-mail ajustado
+('prof_santos1@usp.br', 'oI7qB2yXw3', 56789, '555667788', NULL, 'Nelson Santos', 'Nelson', 'Santos'), -- E-mail ajustado
+('prof_novaes1@usp.br', 'jF6rC5uVz7', 90123, '999001122', NULL, 'Olívia Novaes', 'Olívia', 'Novaes'), -- E-mail ajustado
+('prof_gomes@usp.br', 'lE4tD8pYq9', 24680, '333445566', NULL, 'Paulo Gomes', 'Paulo', 'Gomes'), -- Email repetido, ajustado na linha 54
+('prof_vieira@usp.br', 'hG3wE6sA2b', 13579, '777889900', NULL, 'Quésia Vieira', 'Quésia', 'Vieira'),
+('prof_machado@usp.br', 'cD2vF0rB4c', 86420, '222334455', NULL, 'Ricardo Machado', 'Ricardo', 'Machado'),
+('prof_rezende@usp.br', 'bA1uG9qC6d', 75319, '666778890', NULL, 'Sofia Rezende', 'Sofia', 'Rezende'), -- RG ajustado
+('prof_vieira1@usp.br', 'zY0xH7oD8e', 64208, '000112234', NULL, 'Tadeu Vieira', 'Tadeu', 'Vieira'), -- RG ajustado
+('prof_silva@usp.br', 'wV9zI5nE0f', 53197, '444556678', NULL, 'Úrsula Silva', 'Úrsula', 'Silva'), -- RG ajustado
+('prof_ferreira@usp.br', 'tU8yJ3mL1g', 42086, '888990012', NULL, 'Wagner Ferreira', 'Wagner', 'Ferreira'), -- RG ajustado
+('prof_castilho@usp.br', 'rS7wK4kP2h', 31975, '111009988', NULL, 'Xênia Castilho', 'Xênia', 'Castilho'),
+('prof_vasconcelos@usp.br', 'qR6vL2jO3i', 20864, '555443322', NULL, 'Yago Vasconcelos', 'Yago', 'Vasconcelos'),
+('prof_moretti@usp.br', 'pQ5uM1hN4j', 97531, '999887766', NULL, 'Zélia Moretti', 'Zélia', 'Moretti'),
+('prof_abreu@usp.br', 'oP4tN6gQ5k', 86429, '222110099', NULL, 'Ágata Abreu', 'Ágata', 'Abreu'),
+('prof_freitas1@usp.br', 'nM3sO7fR6l', 75318, '666554433', NULL, 'Benício Freitas', 'Benício', 'Freitas'),
+('prof_guimarães@usp.br', 'lK2rP8eS7m', 64207, '000998877', NULL, 'Cauã Guimarães', 'Cauã', 'Guimarães'),
+('prof_almeida1@usp.br', 'jJ1qQ9dF8n', 53196, '444332211', NULL, 'Diana Almeida', 'Diana', 'Almeida'),
+('prof_duarte@usp.br', 'iI0pO0cS9o', 42085, '888776655', NULL, 'Enzo Duarte', 'Enzo', 'Duarte'),
+('prof_pires1@usp.br', 'hH9nS1bR0p', 31974, '111223300', NULL, 'Flávia Pires', 'Flávia', 'Pires'),
+('prof_correia@usp.br', 'gG8mU2aT1q', 20863, '555667744', NULL, 'Giovani Correia', 'Giovani', 'Correia'),
+('prof_siqueira@usp.br', 'fF7lV3zU2r', 97530, '999001188', NULL, 'Hélio Siqueira', 'Hélio', 'Siqueira'),
+('prof_medeiros@usp.br', 'eE6kX4yW3s', 86428, '222334477', NULL, 'Iara Medeiros', 'Iara', 'Medeiros'),
+('prof_furtado@usp.br', 'dD5jY5xX4t', 75317, '666778811', NULL, 'Jonas Furtado', 'Jonas', 'Furtado'),
+('prof_ferreira1@usp.br', 'cC4iZ6wY5u', 64206, '000112255', NULL, 'Kátia Ferreira', 'Kátia', 'Ferreira'),
+('prof_lima1@usp.br', 'bB3hA7vB6v', 53195, '444556699', NULL, 'Luan Lima', 'Luan', 'Lima'),
+('prof_monteiro2@usp.br', 'aA2gB8uC7w', 42084, '888990022', NULL, 'Mônica Monteiro', 'Mônica', 'Monteiro'),
+('prof_rodrigues@usp.br', 'zZ1fC9tD8x', 31973, '111009933', NULL, 'Noah Rodrigues', 'Noah', 'Rodrigues'),
+('prof_neves@usp.br', 'yY0eD0sE9y', 20862, '555443377', NULL, 'Paula Neves', 'Paula', 'Neves'),
+('prof_gomes1@usp.br', 'xX9dE1rF0z', 97529, '999887700', NULL, 'Rafaela Gomes', 'Rafaela', 'Gomes'),
+('prof_teixeira1@usp.br', 'wW8cG2qG1a', 86427, '222110044', NULL, 'Sérgio Teixeira', 'Sérgio', 'Teixeira'),
+('prof_mendes1@usp.br', 'vV7bH3pF2b', 75316, '666554488', NULL, 'Tainá Mendes', 'Tainá', 'Mendes'),
+('prof_nunes1@usp.br', 'uU6aI4oJ3c', 64205, '000998822', NULL, 'Uriel Nunes', 'Uriel', 'Nunes'),
+('prof_alves1@usp.br', 'tT5zJ5nK4d', 53194, '444332266', NULL, 'Vivian Alves', 'Vivian', 'Alves'),
+('prof_souza1@usp.br', 'sS4yK6mL5e', 42083, '888776600', NULL, 'Wellington Souza', 'Wellington', 'Souza'),
+('prof_cunha1@usp.br', 'rR3xL7kQ6f', 31972, '111223399', NULL, 'Yuri Cunha', 'Yuri', 'Cunha'),
+('prof_barros1@usp.br', 'qQ2wM8jP7g', 20861, '555667733', NULL, 'Zaqueu Barros', 'Zaqueu', 'Barros'),
+('prof_nogueira@usp.br', 'pP1vN9iO8h', 97528, '999001177', NULL, 'Amanda Nogueira', 'Amanda', 'Nogueira'),
+('prof_melo1@usp.br', 'oO0uO0hR9i', 86426, '222334466', NULL, 'Breno Melo', 'Breno', 'Melo'),
+('prof_pinheiro@usp.br', 'nN9tP1gS0j', 75315, '666778800', NULL, 'Cíntia Pinheiro', 'Cíntia', 'Pinheiro'),
+('prof_dias1@usp.br', 'mM8sQ2fT1k', 64204, '000112244', NULL, 'Davi Dias', 'Davi', 'Dias'),
+('prof_ribeiro2@usp.br', 'lL7rR3eU2l', 53193, '444556688', NULL, 'Elisa Ribeiro', 'Elisa', 'Ribeiro'),
+('prof_lopes1@usp.br', 'kK6qS4dV3m', 42082, '888990033', NULL, 'Fábio Lopes', 'Fábio', 'Lopes'),
+('prof_silva1@usp.br', 'jJ5pT5cU4n', 31971, '111009922', NULL, 'Gisele Silva', 'Gisele', 'Silva'),
+('prof_costa2@usp.br', 'iI4oU6bV5o', 20860, '555443366', NULL, 'Heitor Costa', 'Heitor', 'Costa'),
+('prof_oliveira1@usp.br', 'hH3nV7aW6p', 97527, '999887799', NULL, 'Íris Oliveira', 'Íris', 'Oliveira'),
+('prof_martins1@usp.br', 'gG2mX8zY7q', 86425, '222110088', NULL, 'Júlio Martins', 'Júlio', 'Martins'),
+('prof_albuquerque1@usp.br', 'fF1lY9yZ8r', 75314, '666554422', NULL, 'Kelly Albuquerque', 'Kelly', 'Albuquerque'),
+('prof_pereira1@usp.br', 'eE0kZ0xZ9s', 64203, '000998866', NULL, 'Léo Pereira', 'Léo', 'Pereira'),
+('prof_batista@usp.br', 'dD9jA1wX0t', 53192, '444332200', NULL, 'Maysa Batista', 'Maysa', 'Batista'),
+('prof_carvalho2@usp.br', 'cC8iB2vY1u', 42081, '888776644', NULL, 'Nilton Carvalho', 'Nilton', 'Carvalho'),
+('prof_moura1@usp.br', 'bB7hC3uZ2v', 31970, '111223388', NULL, 'Olga Moura', 'Olga', 'Moura'),
+('prof_araujo@usp.br', 'aA6gD4tA3w', 20859, '555667722', NULL, 'Pedro Araújo', 'Pedro', 'Araújo'),
+('prof_pinto@usp.br', 'zZ5fE5sB4x', 97526, '999001166', NULL, 'Quiteria Pinto', 'Quiteria', 'Pinto'),
+('prof_machado1@usp.br', 'yY4eF6rC5y', 86424, '122338475', NULL, 'Renato Machado', 'Renato', 'Machado'),
+('prof_almeida2@usp.br', 'xX3dG7qD6z', 75313, '666778899', NULL, 'Stella Almeida', 'Stella', 'Almeida'),
+('prof_campos3@usp.br', 'wW2cH8pF7a', 64202, '000112235', NULL, 'Túlio Campos', 'Túlio', 'Campos'), -- RG ajustado
+('prof_nunes2@usp.br', 'vV1bI9oG8b', 53191, '444556679', NULL, 'Úrsula Nunes', 'Úrsula', 'Nunes'), -- RG ajustado
+('prof_gomes2@usp.br', 'uU0aJ0nI9c', 42080, '888990013', NULL, 'Vicente Gomes', 'Vicente', 'Gomes'), -- RG ajustado
+('prof_teixeira2@usp.br', 'tT9zK1mM0d', 31969, '111009955', NULL, 'Wanda Teixeira', 'Wanda', 'Teixeira'),
+('prof_mendes2@usp.br', 'sS8yL2lL1e', 20858, '555443399', NULL, 'Xavier Mendes', 'Xavier', 'Mendes'),
+('prof_nunes3@usp.br', 'rR7xM3kK2f', 97525, '999887733', NULL, 'Yasmin Nunes', 'Yasmin', 'Nunes'),
+('prof_alves2@usp.br', 'qQ6wN4jJ3g', 86423, '222110077', NULL, 'Zoe Alves', 'Zoe', 'Alves'),
+('prof_souza2@usp.br', 'pP5vO5iI4h', 75312, '666554411', NULL, 'Alana Souza', 'Alana', 'Souza'),
+('prof_cunha2@usp.br', 'oO4uP6hH5i', 64201, '000998855', NULL, 'Bento Cunha', 'Bento', 'Cunha'),
+('prof_barros2@usp.br', 'nM3tQ7gG6j', 53190, '444332299', NULL, 'Clara Barros', 'Clara', 'Barros'),
+('prof_nogueira1@usp.br', 'lL2sR8fF7k', 42079, '888776633', NULL, 'Dener Nogueira', 'Dener', 'Nogueira'),
+('prof_melo2@usp.br', 'kK1rS9eE8l', 31968, '111223377', NULL, 'Emília Melo', 'Emília', 'Melo'),
+('prof_pinheiro1@usp.br', 'jJ0qT0dD9m', 20857, '555667711', NULL, 'Felipe Pinheiro', 'Felipe', 'Pinheiro'),
+('prof_dias2@usp.br', 'iI9pU1cC0n', 97524, '999001155', NULL, 'Gilda Dias', 'Gilda', 'Dias'),
+('prof_ribeiro3@usp.br', 'hH8oV2bB1o', 86422, '222334444', NULL, 'Heitor Ribeiro', 'Heitor', 'Ribeiro'),
+('prof_lopes2@usp.br', 'gG7nW3aA2p', 75311, '666778888', NULL, 'Igor Lopes', 'Igor', 'Lopes'),
+('prof_silva2@usp.br', 'fF6mV4zZ3q', 64200, '000112222', NULL, 'Jade Silva', 'Jade', 'Silva'),
+('prof_costa3@usp.br', 'eE5lX5yY4r', 53189, '444556666', NULL, 'Kauan Costa', 'Kauan', 'Costa'),
+('prof_oliveira2@usp.br', 'dD4kY6xX5s', 42078, '888990000', NULL, 'Lívia Oliveira', 'Lívia', 'Oliveira');
 
---- Insert 50 funcionários
-('funcionario_leonardoazevedo@usp.br', 'DGBIRjqyEr', 53619, '083992519', NULL, 'Leonardo Azevedo', 'Leonardo', 'Azevedo'),
-('funcionario_letíciamoraes@usp.br', 'JLgp5ZnbPC', 83258, '344742253', NULL, 'Letícia Moraes', 'Letícia', 'Moraes'),
-('funcionario_luanamartins@usp.br', 'vbh4NJJkvJ', 28590, '588919450', NULL, 'Luana Martins', 'Luana', 'Martins'),
-('funcionario_marcelopinto@usp.br', 'HNEpaRiYdi', 30291, '852291831', NULL, 'Marcelo Pinto', 'Marcelo', 'Pinto'),
-('funcionario_mariaeduardanunes@usp.br', 'weSBaWUCXp', 18869, '093543055', NULL, 'Maria Eduarda Nunes', 'Maria', 'Eduarda Nunes'),
-('funcionario_matheusbarbosa@usp.br', 'wa5Oy99thf', 78976, '496611631', NULL, 'Matheus Barbosa', 'Matheus', 'Barbosa'),
-('funcionario_nathaliareis@usp.br', 'Kvh3P3xVWk', 14032, '906866097', NULL, 'Nathalia Reis', 'Nathalia', 'Reis'),
-('funcionario_otáviosilveira@usp.br', 'DVSmoF47N9', 51323, '881550845', NULL, 'Otávio Silveira', 'Otávio', 'Silveira'),
-('funcionario_patríciacosta@usp.br', 'XbrfSKgRg4', 92131, '509491730', NULL, 'Patrícia Costa', 'Patrícia', 'Costa'),
-('funcionario_paulohenriquefarias@usp.br', 'UjTbW8lMMN', 79293, '483834923', NULL, 'Paulo Henrique Farias', 'Paulo', 'Henrique Farias'),
-('funcionario_rafaelmendes@usp.br', 'pXJfqNIwzC', 37491, '262281678', NULL, 'Rafael Mendes', 'Rafael', 'Mendes'),
-('funcionario_renatabatista@usp.br', 'gXVptNfFi3', 15129, '236129586', NULL, 'Renata Batista', 'Renata', 'Batista'),
-('funcionario_ricardomoura@usp.br', 'gd9w3AJALL', 95655, '158323685', NULL, 'Ricardo Moura', 'Ricardo', 'Moura'),
-('funcionario_sabrinalopes@usp.br', 'UGgbqKB2VH', 76611, '277905335', NULL, 'Sabrina Lopes', 'Sabrina', 'Lopes'),
-('funcionario_samuelcardoso@usp.br', 'ByVzeXhMGs', 28644, '076587861', NULL, 'Samuel Cardoso', 'Samuel', 'Cardoso'),
-('funcionario_sofiaoliveira@usp.br', '9GI0HXMveJ', 49418, '023222513', NULL, 'Sofia Oliveira', 'Sofia', 'Oliveira'),
-('funcionario_thiagolima@usp.br', 'fJwiv89Iry', 62238, '234990900', NULL, 'Thiago Lima', 'Thiago', 'Lima'),
-('funcionario_valentinafreitas@usp.br', 'lSsFTNsfQu', 84402, '438924713', NULL, 'Valentina Freitas', 'Valentina', 'Freitas'),
-('funcionario_victoralmeida@usp.br', 'NSsfcqMjjE', 41499, '469064955', NULL, 'Victor Almeida', 'Victor', 'Almeida'),
-('funcionario_viníciusteixeira@usp.br', 'Soziux5YrX', 41031, '661499434', NULL, 'Vinícius Teixeira', 'Vinícius', 'Teixeira'),
-('funcionario_yasminrocha@usp.br', 'k2LhuGGMIZ', 42790, '126880347', NULL, 'Yasmin Rocha', 'Yasmin', 'Rocha'),
-('funcionario_alicefreitas@usp.br', 'Lx13e8eemQ', 82621, '094436951', NULL, 'Alice Freitas', 'Alice', 'Freitas'),
-('funcionario_biancanunes@usp.br', '91ab8KPRTK', 41983, '787480167', NULL, 'Bianca Nunes', 'Bianca', 'Nunes'),
-('funcionario_brunocastro@usp.br', '8HAcBVbxyF', 56706, '559355738', NULL, 'Bruno Castro', 'Bruno', 'Castro'),
-('funcionario_caioribeiro@usp.br', 'n9bi1kA2wU', 49774, '914866856', NULL, 'Caio Ribeiro', 'Caio', 'Ribeiro'),
-('funcionario_carolinalima@usp.br', 'RZ0S6OPdck', 16191, '583509256', NULL, 'Carolina Lima', 'Carolina', 'Lima'),
-('funcionario_danielcarvalho@usp.br', 'mzxgX3u3F2', 48295, '882090651', NULL, 'Daniel Carvalho', 'Daniel', 'Carvalho'),
-('funcionario_déboramarques@usp.br', 'CZg3iwsdIU', 29369, '916823756', NULL, 'Débora Marques', 'Débora', 'Marques'),
-('funcionario_eduardolopes@usp.br', '65m0nSzlvU', 47428, '964205300', NULL, 'Eduardo Lopes', 'Eduardo', 'Lopes'),
-('funcionario_fernandatavares@usp.br', 'Qup89KR1rk', 18491, '289970772', NULL, 'Fernanda Tavares', 'Fernanda', 'Tavares'),
-('funcionario_felipemoura@usp.br', 'rfFSGeD5wY', 56987, '904942110', NULL, 'Felipe Moura', 'Felipe', 'Moura'),
-('funcionario_gabrielacastro@usp.br', '5i8DqlfdtD', 49608, '625400757', NULL, 'Gabriela Castro', 'Gabriela', 'Castro'),
-('funcionario_gustavocosta@usp.br', 'ap6MdSce0U', 14863, '985946106', NULL, 'Gustavo Costa', 'Gustavo', 'Costa'),
-('funcionario_helenabarros@usp.br', 'qyJIRrdA5u', 16944, '360635586', NULL, 'Helena Barros', 'Helena', 'Barros'),
-('funcionario_igoralmeida@usp.br', 'L6WhnyVoSm', 29600, '989918829', NULL, 'Igor Almeida', 'Igor', 'Almeida'),
-('funcionario_isabellateixeira@usp.br', 'fFmCyF5JL0', 62833, '303764929', NULL, 'Isabella Teixeira', 'Isabella', 'Teixeira'),
-('funcionario_joãopedroreis@usp.br', 'XE2R022xJ9', 48167, '726465890', NULL, 'João Pedro Reis', 'João', 'Pedro Reis'),
-('funcionario_julianunes@usp.br', 'SfvcI3PfDN', 66633, '864786691', NULL, 'Julia Nunes', 'Julia', 'Nunes'),
-('funcionario_karensouza@usp.br', 'THnb8zB81J', 21144, '949796095', NULL, 'Karen Souza', 'Karen', 'Souza'),
-('funcionario_kauêfreitas@usp.br', 'MrmEnXvUC7', 28052, '809276560', NULL, 'Kauê Freitas', 'Kauê', 'Freitas'),
-('funcionario_larissafaria@usp.br', 'VISoz0SFdo', 67194, '685555623', NULL, 'Larissa Faria', 'Larissa', 'Faria'),
-('funcionario_leonardocarvalho@usp.br', 'ZkqyFRsWXX', 96787, '048134768', NULL, 'Leonardo Carvalho', 'Leonardo', 'Carvalho'),
-('funcionario_letíciacosta@usp.br', 'qRpU5u75ac', 76875, '422870616', NULL, 'Letícia Costa', 'Letícia', 'Costa'),
-('funcionario_lucasmartins@usp.br', '7wiqfoZ65a', 56217, '168976684', NULL, 'Lucas Martins', 'Lucas', 'Martins'),
-('funcionario_luanatavares@usp.br', 'OPBXyy6Cxn', 16045, '694812895', NULL, 'Luana Tavares', 'Luana', 'Tavares'),
-('funcionario_marcelomendes@usp.br', 'Pbn6qmSUlG', 66230, '011802042', NULL, 'Marcelo Mendes', 'Marcelo', 'Mendes'),
-('funcionario_mariaclarabarbosa@usp.br', 'POh8NZjxoR', 45445, '704581555', NULL, 'Maria Clara Barbosa', 'Maria', 'Clara Barbosa'),
-('funcionario_matheusalmeida@usp.br', '0eo8ss1r7a', 32136, '686600564', NULL, 'Matheus Almeida', 'Matheus', 'Almeida'),
-('funcionario_natáliafarias@usp.br', 'oosqU9d6hO', 46357, '502453744', NULL, 'Natália Farias', 'Natália', 'Farias'),
-('funcionario_otáviocosta@usp.br', '3mjnsQ8eWQ', 84562, '200241279', NULL, 'Otávio Costa', 'Otávio', 'Costa');
 
+INSERT INTO usuario (email, senha, nusp, rg, foto, nome, pnome, unome) VALUES
+('funcionario_patríciacosta@usp.br', 'XbrfSKgRg4', 0, '509491730', NULL, 'Patrícia Costa', 'Patrícia', 'Costa'),
+('funcionario_nathaliareis@usp.br', 'Kvh3P3xVWk', 1, '906866097', NULL, 'Nathalia Reis', 'Nathalia', 'Reis'),
+('funcionario_carolinalima@usp.br', 'RZ0S6OPdck', 2, '583509256', NULL, 'Carolina Lima', 'Carolina', 'Lima'),
+('funcionario_luanatavares@usp.br', 'OPBXyy6Cxn', 3, '694812895', NULL, 'Luana Tavares', 'Luana', 'Tavares'),
+('funcionario_helenabarros@usp.br', 'qyJIRrdA5u', 4, '360635586', NULL, 'Helena Barros', 'Helena', 'Barros'),
+('funcionario_gustavocosta@usp.br', 'ap6MdSce0U', 5, '985946106', NULL, 'Gustavo Costa', 'Gustavo', 'Costa'),
+('funcionario_fernandatavares@usp.br', 'Qup89KR1rk', 6, '289970772', NULL, 'Fernanda Tavares', 'Fernanda', 'Tavares'),
+('funcionario_mariaeduardanunes@usp.br', 'weSBaWUCXp', 7, '093543055', NULL, 'Maria Eduarda Nunes', 'Maria', 'Eduarda Nunes'),
+('funcionario_renatabatista@usp.br', 'gXVptNfFi3', 8, '236129586', NULL, 'Renata Batista', 'Renata', 'Batista'),
+('funcionario_karensouza@usp.br', 'THnb8zB81J', 9, '949796095', NULL, 'Karen Souza', 'Karen', 'Souza'),
+('funcionario_robertaazevedo@usp.br', 'Z1eXyB7pTf', 10, '712345678', NULL, 'Roberta Azevedo', 'Roberta', 'Azevedo'),
+('funcionario_susanadias@usp.br', 'A2fGzC8qUj', 11, '823456789', NULL, 'Susana Dias', 'Susana', 'Dias'),
+('funcionario_tácioneto@usp.br', 'B3gHaD9rVk', 12, '934567890', NULL, 'Tácio Neto', 'Tácio', 'Neto'),
+('funcionario_ulissesfogaça@usp.br', 'C4hIbE0sWl', 13, '045678901', NULL, 'Ulisses Fogaça', 'Ulisses', 'Fogaça'),
+('funcionario_veronicaduarte@usp.br', 'D5iJcE1tXm', 14, '156789012', NULL, 'Verônica Duarte', 'Verônica', 'Duarte'),
+('funcionario_wilsonpires@usp.br', 'E6jKdF2uYn', 15, '267890123', NULL, 'Wilson Pires', 'Wilson', 'Pires'),
+('funcionario_ximenaferreira@usp.br', 'F7kLeG3vZo', 16, '378901234', NULL, 'Ximena Ferreira', 'Ximena', 'Ferreira'),
+('funcionario_yagoesteves@usp.br', 'G8lMfH4wAp', 17, '489012345', NULL, 'Yago Esteves', 'Yago', 'Esteves'),
+('funcionario_zuleicavasconcelos@usp.br', 'H9mNgI5xBp', 18, '590123456', NULL, 'Zuleica Vasconcelos', 'Zuleica', 'Vasconcelos'),
+('funcionario_alessandradacosta@usp.br', 'I0nOhJ6yCq', 19, '601234567', NULL, 'Alessandra da Costa', 'Alessandra', 'da Costa'),
+('funcionario_marcelomendes@usp.br', 'Pbn6qmSUlG', 20, '011802042', NULL, 'Marcelo Mendes', 'Marcelo', 'Mendes'),
+('funcionario_igor@usp.br', 'L6WhnyVoSm', 21, '989918829', NULL, 'Igor Almeida', 'Igor', 'Almeida'),
+('funcionario_déboramarques@usp.br', 'CZg3iwsdIU', 22, '916823756', NULL, 'Débora Marques', 'Débora', 'Marques'),
+('funcionario_samuelcardoso@usp.br', 'ByVzeXhMGs', 23, '076587861', NULL, 'Samuel Cardoso', 'Samuel', 'Cardoso'),
+('funcionario_luanamartins@usp.br', 'vbh4NJJkvJ', 24, '588919450', NULL, 'Luana Martins', 'Luana', 'Martins'),
+('funcionario_kauêfreitas@usp.br', 'MrmEnXvUC7', 25, '809276560', NULL, 'Kauê Freitas', 'Kauê', 'Freitas'),
+('funcionario_marcelopinto@usp.br', 'HNEpaRiYdi', 26, '852291831', NULL, 'Marcelo Pinto', 'Marcelo', 'Pinto'),
+('funcionario_matheusalmeida@usp.br', '0eo8ss1r7a', 27, '686600564', NULL, 'Matheus Almeida', 'Matheus', 'Almeida'),
+('funcionario_rafaelmendes@usp.br', 'pXJfqNIwzC', 28, '262281678', NULL, 'Rafael Mendes', 'Rafael', 'Mendes'),
+('funcionario_viníciusteixeira@usp.br', 'Soziux5YrX', 29, '661499434', NULL, 'Vinícius Teixeira', 'Vinícius', 'Teixeira'),
+('funcionario_victoralmeida@usp.br', 'NSsfcqMjjE', 30, '469064955', NULL, 'Victor Almeida', 'Victor', 'Almeida'),
+('funcionario_biancanunes@usp.br', '91ab8KPRTK', 31, '787480167', NULL, 'Bianca Nunes', 'Bianca', 'Nunes'),
+('funcionario_yasminrocha@usp.br', 'k2LhuGGMIZ', 32, '126880347', NULL, 'Yasmin Rocha', 'Yasmin', 'Rocha'),
+('funcionario_danielcarvalho@usp.br', 'mzxgX3u3F2', 33, '882090651', NULL, 'Daniel Carvalho', 'Daniel', 'Carvalho'),
+('funcionario_joãopedroreis@usp.br', 'XE2R022xJ9', 34, '726465890', NULL, 'João Pedro Reis', 'João', 'Pedro Reis'),
+('funcionario_eduardolopes@usp.br', '65m0nSzlvU', 35, '964205300', NULL, 'Eduardo Lopes', 'Eduardo', 'Lopes'),
+('funcionario_sofiaoliveira@usp.br', '9GI0HXMveJ', 36, '023222513', NULL, 'Sofia Oliveira', 'Sofia', 'Oliveira'),
+('funcionario_gabrielacastro@usp.br', '5i8DqlfdtD', 37, '625400757', NULL, 'Gabriela Castro', 'Gabriela', 'Castro'),
+('funcionario_caioribeiro@usp.br', 'n9bi1kA2wU', 38, '914866856', NULL, 'Caio Ribeiro', 'Caio', 'Ribeiro'),
+('funcionario_natáliafarias@usp.br', 'oosqU9d6hO', 39, '502453744', NULL, 'Natália Farias', 'Natália', 'Farias'),
+('funcionario_mariaclarabarbosa@usp.br', 'POh8NZjxoR', 40, '704581555', NULL, 'Maria Clara Barbosa', 'Maria', 'Clara Barbosa'),
+('funcionario_ricardomoura@usp.br', 'gd9w3AJALL', 41, '158323685', NULL, 'Ricardo Moura', 'Ricardo', 'Moura'),
+('funcionario_otáviosilveira@usp.br', 'DVSmoF47N9', 42, '881550845', NULL, 'Otávio Silveira', 'Otávio', 'Silveira'),
+('funcionario_leonardoazevedo@usp.br', 'DGBIRjqyEr', 43, '083992519', NULL, 'Leonardo Azevedo', 'Leonardo', 'Azevedo'),
+('funcionario_brunocastro@usp.br', '8HAcBVbxyF', 44, '559355738', NULL, 'Bruno Castro', 'Bruno', 'Castro'),
+('funcionario_lucasmartins@usp.br', '7wiqfoZ65a', 45, '168976684', NULL, 'Lucas Martins', 'Lucas', 'Martins'),
+('funcionario_thiagolima@usp.br', 'fJwiv89Iry', 46, '234990900', NULL, 'Thiago Lima', 'Thiago', 'Lima'),
+('funcionario_isabellateixeira@usp.br', 'fFmCyF5JL0', 47, '303764929', NULL, 'Isabella Teixeira', 'Isabella', 'Teixeira'),
+('funcionario_larissafaria@usp.br', 'VISoz0SFdo', 48, '685555623', NULL, 'Larissa Faria', 'Larissa', 'Faria'),
+('funcionario_sabrinalopes@usp.br', 'UGgbqKB2VH', 49, '277905335', NULL, 'Sabrina Lopes', 'Sabrina', 'Lopes'),
+('funcionario_matheusbarbosa@usp.br', 'wa5Oy99thf', 50, '496611631', NULL, 'Matheus Barbosa', 'Matheus', 'Barbosa'),
+('funcionario_paulohenriquefarias@usp.br', 'UjTbW8lMMN', 51, '483834923', NULL, 'Paulo Henrique Farias', 'Paulo', 'Henrique Farias'),
+('funcionario_alicefreitas@usp.br', 'Lx13e8eemQ', 52, '094436951', NULL, 'Alice Freitas', 'Alice', 'Freitas'),
+('funcionario_letíciamoraes@usp.br', 'JLgp5ZnbPC', 53, '344742253', NULL, 'Letícia Moraes', 'Letícia', 'Moraes'),
+('funcionario_valentinafreitas@usp.br', 'lSsFTNsfQu', 54, '438924713', NULL, 'Valentina Freitas', 'Valentina', 'Freitas'),
+('funcionario_leonardocarvalho@usp.br', 'ZkqyFRsWXX', 55, '048134768', NULL, 'Leonardo Carvalho', 'Leonardo', 'Carvalho'),
+('funcionario_julianunes@usp.br', 'SfvcI3PfDN', 56, '864786691', NULL, 'Julia Nunes', 'Julia', 'Nunes'),
+('funcionario_letíciacosta@usp.br', 'qRpU5u75ac', 57, '422870616', NULL, 'Letícia Costa', 'Letícia', 'Costa'),
+('funcionario_felipemoura@usp.br', 'rfFSGeD5wY', 58, '904942110', NULL, 'Felipe Moura', 'Felipe', 'Moura'),
+('funcionario_otáviocosta@usp.br', '3mjnsQ8eWQ', 59, '200241279', NULL, 'Otávio Costa', 'Otávio', 'Costa'),
+-- Novos 20 Funcionários (NUSP 60 a 69 são os restantes do primeiro bloco, 70 a 79 são os novos)
+('funcionario_amandadepaula@usp.br', 'rF1xT7mG2c', 60, '771234567', NULL, 'Amanda de Paula', 'Amanda', 'de Paula'),
+('funcionario_brunosilveira@usp.br', 'sS2yU8nG3d', 61, '882345678', NULL, 'Bruno Silveira', 'Bruno', 'Silveira'),
+('funcionario_camilafonseca@usp.br', 'tT3zV9oH4e', 62, '993456789', NULL, 'Camila Fonseca', 'Camila', 'Fonseca'),
+('funcionario_diegovasconcelos@usp.br', 'uU4aW0pJ5f', 63, '004567890', NULL, 'Diego Vasconcelos', 'Diego', 'Vasconcelos'),
+('funcionario_erikacosta@usp.br', 'vV5bX1qK6g', 64, '115678901', NULL, 'Érika Costa', 'Érika', 'Costa'),
+('funcionario_fernandooliveira@usp.br', 'wW6cX2rL7h', 65, '226789012', NULL, 'Fernando Oliveira', 'Fernando', 'Oliveira'),
+('funcionario_gabrielreis@usp.br', 'xX7dY3sM8i', 66, '337890123', NULL, 'Gabriel Reis', 'Gabriel', 'Reis'),
+('funcionario_heitoralmeida@usp.br', 'yY8eZ4tN9j', 67, '448901234', NULL, 'Heitor Almeida', 'Heitor', 'Almeida'),
+('funcionario_isadoralima@usp.br', 'zZ9fA5uO0k', 68, '559012345', NULL, 'Isadora Lima', 'Isadora', 'Lima'),
+('funcionario_juliocarlos@usp.br', 'A0gB6vP1l', 69, '660123456', NULL, 'Júlio Carlos', 'Júlio', 'Carlos'),
+('funcionario_laurafernandes@usp.br', 'B1hC7wQ2m', 70, '771345670', NULL, 'Laura Fernandes', 'Laura', 'Fernandes'),
+('funcionario_marcosgomes@usp.br', 'C2iD8xR3n', 71, '882456781', NULL, 'Marcos Gomes', 'Marcos', 'Gomes'),
+('funcionario_nataliarocha@usp.br', 'D3jE9yS4o', 72, '993567892', NULL, 'Natália Rocha', 'Natália', 'Rocha'),
+('funcionario_pedrocunha@usp.br', 'E4kF0zT5p', 73, '004678903', NULL, 'Pedro Cunha', 'Pedro', 'Cunha'),
+('funcionario_quintinocruz@usp.br', 'F5lG1aU6q', 74, '115789014', NULL, 'Quintino Cruz', 'Quintino', 'Cruz'),
+('funcionario_raquelmartins@usp.br', 'G6mH2bV7r', 75, '226890125', NULL, 'Raquel Martins', 'Raquel', 'Martins'),
+('funcionario_tiagosilva@usp.br', 'H7nI3cV8s', 76, '337901236', NULL, 'Tiago Silva', 'Tiago', 'Silva'),
+('funcionario_ursulasouza@usp.br', 'I8oJ4dW9t', 77, '448012347', NULL, 'Úrsula Souza', 'Úrsula', 'Souza'),
+('funcionario_vitorcosta@usp.br', 'J9pK5eX0u', 78, '559123458', NULL, 'Vítor Costa', 'Vítor', 'Costa'),
+('funcionario_wanessamelo@usp.br', 'K0qL6fY1v', 79, '660234569', NULL, 'Wanessa Melo', 'Wanessa', 'Melo');
 
 -- tabela instituto
 
@@ -355,7 +465,7 @@ INSERT INTO curso (nome, modalidade, periodo, carga_horaria) VALUES
 ('Tecnológico em Marketing Digital', 'EAD', 'noturno', 3200);
 
 -- tabela aluno
-TRUNCATE TABLE aluno CASCADE;
+---- TRUNCATE TABLE aluno CASCADE;
 CREATE TABLE aluno (
     num_matricula INTEGER UNIQUE NOT NULL,
     nusp_usuario INTEGER PRIMARY KEY,
@@ -430,6 +540,7 @@ CREATE TABLE associado (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+TRUNCATE TABLE associado CASCADE;
 DO $$
 DECLARE
     num INTEGER;
@@ -438,10 +549,10 @@ DECLARE
     nusp_associado INTEGER;
     i INTEGER := 1;
 BEGIN
-    WHILE i <= 100 LOOP
+    WHILE i <= 230 LOOP
         LOOP
             -- gera número de sala aleatório (2 dígitos)
-            num := FLOOR(RANDOM() * 90 + 10);
+            num := FLOOR(RANDOM() * 900 + 100);
 
             -- gera bloco aleatório (A, B ou C)
             bloco := (ARRAY['A','B','C'])[FLOOR(RANDOM() * 3 + 1)];
@@ -481,6 +592,58 @@ BEGIN
     RAISE NOTICE 'Foram geradas 100 associações únicas!';
 END $$;
 
+DO $$
+DECLARE
+    num INTEGER;
+    bloco CHAR(1); -- Usando CHAR(1) para bloco
+    sala_assoc VARCHAR(10);
+    nusp_associado INTEGER;
+    i INTEGER := 1;
+    total_funcionarios INTEGER := 90; -- O número de funcionários que você deseja vincular (0 a 69)
+BEGIN
+    WHILE i <= total_funcionarios LOOP
+        LOOP
+            -- 1. Gera número de sala aleatório (3 dígitos: 100-999)
+            num := FLOOR(RANDOM() * 900 + 100);
+
+            -- 2. Gera bloco aleatório (A, B ou C)
+            bloco := (ARRAY['A','B','C'])[FLOOR(RANDOM() * 3 + 1)];
+
+            -- 3. Concatena bloco + número para a sala
+            sala_assoc := bloco || num::TEXT;
+
+            -- 4. Escolhe um NUSP existente ALEATÓRIO no intervalo dos FUNCIONÁRIOS (0 a 69)
+            SELECT nusp INTO nusp_associado
+            FROM usuario
+            -- MUDANÇA AQUI: Filtra apenas os NUSPs de FUNCIONÁRIOS (0 a 69)
+            WHERE nusp BETWEEN 0 AND 100
+              AND nusp NOT IN (SELECT nusp_usuario FROM associado)
+            ORDER BY RANDOM()
+            LIMIT 1;
+
+            -- 5. Se não houver NUSP disponível, sair do loop
+            IF nusp_associado IS NOT NULL THEN
+                -- 6. Verifica se a sala ainda não foi usada (Garantindo unicidade de sala)
+                EXIT WHEN NOT EXISTS (
+                    SELECT 1
+                    FROM associado
+                    WHERE sala = sala_assoc
+                );
+            ELSE
+                RAISE NOTICE 'Não há mais NUSPs de funcionários (0-69) disponíveis. Foram geradas % associações.', i-1;
+                RETURN;
+            END IF;
+        END LOOP;
+
+        -- 7. Insere a combinação única
+        INSERT INTO associado (num, bloco, sala, nusp_usuario)
+        VALUES (num, bloco, sala_assoc, nusp_associado);
+
+        i := i + 1;
+    END LOOP;
+
+    RAISE NOTICE 'Foram geradas % associações de funcionários (NUSP 0-69) com sucesso!', total_funcionarios;
+END $$;
 
 -- tabela professor
 CREATE TABLE professor (
@@ -489,7 +652,7 @@ CREATE TABLE professor (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
---- Inserção de 50 professores 
+--- Inserção de 120 professores 
 INSERT INTO professor (nusp_associado)
 SELECT nusp FROM usuario
 	WHERE nusp BETWEEN 10000 AND 99999 AND email ~'^prof_'
@@ -520,7 +683,7 @@ CREATE TABLE funcionario (
 --- Inserção de 50 funcionários aleatórios
 INSERT INTO funcionario (nusp_associado)
 SELECT nusp FROM usuario
-	WHERE nusp BETWEEN 10000 AND 99999 AND email ~'^funcionario_'
+	WHERE nusp BETWEEN 0 AND 100 AND email ~'^funcionario_'
 ON CONFLICT (nusp_associado) DO NOTHING;
 
 DROP TABLE IF EXISTS departamento CASCADE;
@@ -1453,6 +1616,7 @@ CREATE TABLE avaliacao_sala (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+DROP TABLE IF EXISTS recursos CASCADE;
 -- tabela recursos
 CREATE TABLE recursos (
     n_cadeiras SMALLINT,
@@ -1460,16 +1624,129 @@ CREATE TABLE recursos (
     n_ar_condicionado SMALLINT CHECK (n_ar_condicionado >= 0),
     n_lousas SMALLINT CHECK (n_lousas >= 0),
     descricao VARCHAR(240),
-    id_sala INTEGER PRIMARY KEY,
-    FOREIGN KEY (id_sala) REFERENCES sala(id_sala)
+    id_sala VARCHAR (10) ,
+	id_instituto INTEGER,
+	PRIMARY KEY(id_sala,id_instituto),
+	FOREIGN KEY (id_sala, id_instituto) REFERENCES sala(id_sala, id_instituto)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO recursos (n_cadeiras, n_ventiladores, n_ar_condicionado, n_lousas, descricao, id_sala, id_instituto) VALUES
+-- =================================================================
+-- IME (ID 1) - n_cadeiras=lot_max | AC(1-3) ou FAN(1-2) | Lousa(1-2)
+-- =================================================================
+-- BLOCO A (10 Salas)
+(45, 0, 2, 1, NULL, 'A1', 1), (32, 1, 0, 2, NULL, 'A2', 1), (58, 0, 3, 1, NULL, 'A3', 1), (25, 2, 0, 2, NULL, 'A4', 1), (40, 0, 1, 1, NULL, 'A5', 1), 
+(30, 1, 0, 2, NULL, 'A6', 1), (55, 0, 3, 1, NULL, 'A7', 1), (21, 2, 0, 2, NULL, 'A8', 1), (42, 0, 2, 1, NULL, 'A9', 1), (38, 1, 0, 2, NULL, 'A10', 1), 
+-- BLOCO B (35 Salas)
+(60, 0, 1, 1, NULL, 'B1', 1), (28, 2, 0, 2, NULL, 'B2', 1), (49, 0, 3, 1, NULL, 'B3', 1), (35, 1, 0, 2, NULL, 'B4', 1), (52, 0, 2, 1, NULL, 'B5', 1), 
+(22, 2, 0, 2, NULL, 'B6', 1), (44, 0, 1, 1, NULL, 'B7', 1), (31, 1, 0, 2, NULL, 'B8', 1), (57, 0, 3, 1, NULL, 'B9', 1), (26, 2, 0, 2, NULL, 'B10', 1), 
+(47, 0, 2, 1, NULL, 'B11', 1), (39, 1, 0, 2, NULL, 'B12', 1), (54, 0, 1, 1, NULL, 'B13', 1), (23, 2, 0, 2, NULL, 'B14', 1), (41, 0, 3, 1, NULL, 'B15', 1), 
+(33, 1, 0, 2, NULL, 'B16', 1), (59, 0, 2, 1, NULL, 'B17', 1), (20, 2, 0, 2, NULL, 'B18', 1), (46, 0, 1, 1, NULL, 'B19', 1), (34, 1, 0, 2, NULL, 'B20', 1), 
+(50, 0, 3, 1, NULL, 'B21', 1), (27, 2, 0, 2, NULL, 'B22', 1), (43, 0, 2, 1, NULL, 'B23', 1), (36, 1, 0, 2, NULL, 'B24', 1), (53, 0, 1, 1, NULL, 'B25', 1), 
+(29, 2, 0, 2, NULL, 'B26', 1), (48, 0, 3, 1, NULL, 'B27', 1), (37, 1, 0, 2, NULL, 'B28', 1), (51, 0, 2, 1, NULL, 'B29', 1), (24, 2, 0, 2, NULL, 'B30', 1), 
+(60, 0, 1, 1, NULL, 'B31', 1), (25, 1, 0, 2, NULL, 'B32', 1), (40, 0, 3, 1, NULL, 'B33', 1), (30, 2, 0, 2, NULL, 'B34', 1), (55, 0, 2, 1, NULL, 'B35', 1), 
+-- BLOCO C (5 Salas)
+(45, 1, 0, 2, NULL, 'C1', 1), (22, 0, 3, 1, NULL, 'C2', 1), (38, 2, 0, 2, NULL, 'C3', 1), (50, 0, 1, 1, NULL, 'C4', 1), (35, 1, 0, 2, NULL, 'C5', 1), 
+
+-- =================================================================
+-- FEA (ID 2)
+-- =================================================================
+-- BLOCO A (20 Salas)
+(40, 0, 2, 1, NULL, 'A1', 2), (30, 1, 0, 2, NULL, 'A2', 2), (50, 0, 3, 1, NULL, 'A3', 2), (25, 2, 0, 2, NULL, 'A4', 2), (60, 0, 1, 1, NULL, 'A5', 2), 
+(35, 1, 0, 2, NULL, 'A6', 2), (48, 0, 3, 1, NULL, 'A7', 2), (22, 2, 0, 2, NULL, 'A8', 2), (52, 0, 2, 1, NULL, 'A9', 2), (38, 1, 0, 2, NULL, 'A10', 2), 
+(45, 0, 1, 1, NULL, 'A11', 2), (28, 2, 0, 2, NULL, 'A12', 2), (59, 0, 3, 1, NULL, 'A13', 2), (31, 1, 0, 2, NULL, 'A14', 2), (42, 0, 2, 1, NULL, 'A15', 2), 
+(20, 2, 0, 2, NULL, 'A16', 2), (50, 0, 1, 1, NULL, 'A17', 2), (33, 1, 0, 2, NULL, 'A18', 2), (47, 0, 3, 1, NULL, 'A19', 2), (24, 2, 0, 2, NULL, 'A20', 2), 
+-- BLOCO B (70 Salas)
+(56, 0, 2, 1, NULL, 'B1', 2), (39, 1, 0, 2, NULL, 'B2', 2), (41, 0, 3, 1, NULL, 'B3', 2), (26, 2, 0, 2, NULL, 'B4', 2), (53, 0, 1, 1, NULL, 'B5', 2), 
+(32, 1, 0, 2, NULL, 'B6', 2), (44, 0, 3, 1, NULL, 'B7', 2), (29, 2, 0, 2, NULL, 'B8', 2), (58, 0, 2, 1, NULL, 'B9', 2), (37, 1, 0, 2, NULL, 'B10', 2), 
+(49, 0, 1, 1, NULL, 'B11', 2), (21, 2, 0, 2, NULL, 'B12', 2), (54, 0, 3, 1, NULL, 'B13', 2), (36, 1, 0, 2, NULL, 'B14', 2), (46, 0, 2, 1, NULL, 'B15', 2), 
+(23, 2, 0, 2, NULL, 'B16', 2), (57, 0, 1, 1, NULL, 'B17', 2), (34, 1, 0, 2, NULL, 'B18', 2), (43, 0, 3, 1, NULL, 'B19', 2), (27, 2, 0, 2, NULL, 'B20', 2), 
+(51, 0, 2, 1, NULL, 'B21', 2), (30, 1, 0, 2, NULL, 'B22', 2), (40, 0, 1, 1, NULL, 'B23', 2), (25, 2, 0, 2, NULL, 'B24', 2), (60, 0, 3, 1, NULL, 'B25', 2), 
+(35, 1, 0, 2, NULL, 'B26', 2), (48, 0, 2, 1, NULL, 'B27', 2), (22, 2, 0, 2, NULL, 'B28', 2), (52, 0, 1, 1, NULL, 'B29', 2), (38, 1, 0, 2, NULL, 'B30', 2), 
+(45, 0, 3, 1, NULL, 'B31', 2), (28, 2, 0, 2, NULL, 'B32', 2), (59, 0, 2, 1, NULL, 'B33', 2), (31, 1, 0, 2, NULL, 'B34', 2), (42, 0, 1, 1, NULL, 'B35', 2), 
+(20, 2, 0, 2, NULL, 'B36', 2), (50, 0, 3, 1, NULL, 'B37', 2), (33, 1, 0, 2, NULL, 'B38', 2), (47, 0, 2, 1, NULL, 'B39', 2), (24, 2, 0, 2, NULL, 'B40', 2), 
+(56, 0, 1, 1, NULL, 'B41', 2), (39, 1, 0, 2, NULL, 'B42', 2), (41, 0, 3, 1, NULL, 'B43', 2), (26, 2, 0, 2, NULL, 'B44', 2), (53, 0, 2, 1, NULL, 'B45', 2), 
+(32, 1, 0, 2, NULL, 'B46', 2), (44, 0, 1, 1, NULL, 'B47', 2), (29, 2, 0, 2, NULL, 'B48', 2), (58, 0, 3, 1, NULL, 'B49', 2), (37, 1, 0, 2, NULL, 'B50', 2), 
+(49, 0, 2, 1, NULL, 'B51', 2), (21, 2, 0, 2, NULL, 'B52', 2), (54, 0, 1, 1, NULL, 'B53', 2), (36, 1, 0, 2, NULL, 'B54', 2), (46, 0, 3, 1, NULL, 'B55', 2), 
+(23, 2, 0, 2, NULL, 'B56', 2), (57, 0, 2, 1, NULL, 'B57', 2), (34, 1, 0, 2, NULL, 'B58', 2), (43, 0, 1, 1, NULL, 'B59', 2), (27, 2, 0, 2, NULL, 'B60', 2), 
+(51, 0, 3, 1, NULL, 'B61', 2), (40, 1, 0, 2, NULL, 'B62', 2), (30, 0, 2, 1, NULL, 'B63', 2), (25, 2, 0, 2, NULL, 'B64', 2), (60, 0, 1, 1, NULL, 'B65', 2), 
+(35, 1, 0, 2, NULL, 'B66', 2), (55, 0, 3, 1, NULL, 'B67', 2), (45, 2, 0, 2, NULL, 'B68', 2), (20, 0, 2, 1, NULL, 'B69', 2), (50, 1, 0, 2, NULL, 'B70', 2), 
+-- BLOCO C (10 Salas)
+(33, 0, 1, 1, NULL, 'C1', 2), (47, 2, 0, 2, NULL, 'C2', 2), (24, 0, 3, 1, NULL, 'C3', 2), (56, 1, 0, 2, NULL, 'C4', 2), (39, 0, 2, 1, NULL, 'C5', 2), 
+(41, 2, 0, 2, NULL, 'C6', 2), (26, 0, 1, 1, NULL, 'C7', 2), (53, 1, 0, 2, NULL, 'C8', 2), (32, 0, 3, 1, NULL, 'C9', 2), (44, 2, 0, 2, NULL, 'C10', 2), 
+
+-- =================================================================
+-- FAU (ID 3)
+-- =================================================================
+-- BLOCO A (6 Salas)
+(40, 0, 2, 1, NULL, 'A1', 3), (25, 1, 0, 2, NULL, 'A2', 3), (55, 0, 3, 1, NULL, 'A3', 3), (35, 2, 0, 2, NULL, 'A4', 3), (48, 0, 1, 1, NULL, 'A5', 3), (22, 1, 0, 2, NULL, 'A6', 3), 
+-- BLOCO B (21 Salas)
+(59, 0, 3, 1, NULL, 'B1', 3), (31, 2, 0, 2, NULL, 'B2', 3), (42, 0, 2, 1, NULL, 'B3', 3), (20, 1, 0, 2, NULL, 'B4', 3), (50, 0, 1, 1, NULL, 'B5', 3), 
+(33, 2, 0, 2, NULL, 'B6', 3), (47, 0, 3, 1, NULL, 'B7', 3), (24, 1, 0, 2, NULL, 'B8', 3), (56, 0, 2, 1, NULL, 'B9', 3), (39, 2, 0, 2, NULL, 'B10', 3), 
+(41, 0, 1, 1, NULL, 'B11', 3), (26, 1, 0, 2, NULL, 'B12', 3), (53, 0, 3, 1, NULL, 'B13', 3), (32, 2, 0, 2, NULL, 'B14', 3), (44, 0, 2, 1, NULL, 'B15', 3), 
+(29, 1, 0, 2, NULL, 'B16', 3), (58, 0, 1, 1, NULL, 'B17', 3), (37, 2, 0, 2, NULL, 'B18', 3), (49, 0, 3, 1, NULL, 'B19', 3), (21, 1, 0, 2, NULL, 'B20', 3), 
+(54, 0, 2, 1, NULL, 'B21', 3),
+-- BLOCO C (3 Salas)
+(36, 2, 0, 2, NULL, 'C1', 3), (46, 0, 1, 1, NULL, 'C2', 3), (23, 1, 0, 2, NULL, 'C3', 3),
+
+-- =================================================================
+-- IF (ID 4)
+-- =================================================================
+-- BLOCO A (5 Salas)
+(50, 0, 3, 1, NULL, 'A1', 4), (30, 1, 0, 2, NULL, 'A2', 4), (45, 0, 2, 1, NULL, 'A3', 4), (20, 2, 0, 2, NULL, 'A4', 4), (60, 0, 1, 1, NULL, 'A5', 4), 
+-- BLOCO B (18 Salas)
+(35, 1, 0, 2, NULL, 'B1', 4), (48, 0, 3, 1, NULL, 'B2', 4), (22, 2, 0, 2, NULL, 'B3', 4), (52, 0, 2, 1, NULL, 'B4', 4), (38, 1, 0, 2, NULL, 'B5', 4), 
+(45, 0, 1, 1, NULL, 'B6', 4), (28, 2, 0, 2, NULL, 'B7', 4), (59, 0, 3, 1, NULL, 'B8', 4), (31, 1, 0, 2, NULL, 'B9', 4), (42, 0, 2, 1, NULL, 'B10', 4), 
+(20, 2, 0, 2, NULL, 'B11', 4), (50, 0, 1, 1, NULL, 'B12', 4), (33, 1, 0, 2, NULL, 'B13', 4), (47, 0, 3, 1, NULL, 'B14', 4), (24, 2, 0, 2, NULL, 'B15', 4), 
+(56, 0, 2, 1, NULL, 'B16', 4), (39, 1, 0, 2, NULL, 'B17', 4), (41, 0, 1, 1, NULL, 'B18', 4),
+-- BLOCO C (2 Salas)
+(26, 2, 0, 2, NULL, 'C1', 4), (53, 0, 3, 1, NULL, 'C2', 4),
+
+-- =================================================================
+-- IAG (ID 5)
+-- =================================================================
+-- BLOCO A (6 Salas)
+(45, 0, 2, 1, NULL, 'A1', 5), (28, 1, 0, 2, NULL, 'A2', 5), (55, 0, 3, 1, NULL, 'A3', 5), (32, 2, 0, 2, NULL, 'A4', 5), (40, 0, 1, 1, NULL, 'A5', 5), (21, 1, 0, 2, NULL, 'A6', 5), 
+-- BLOCO B (21 Salas)
+(58, 0, 3, 1, NULL, 'B1', 5), (35, 2, 0, 2, NULL, 'B2', 5), (49, 0, 2, 1, NULL, 'B3', 5), (24, 1, 0, 2, NULL, 'B4', 5), (52, 0, 1, 1, NULL, 'B5', 5), 
+(37, 2, 0, 2, NULL, 'B6', 5), (44, 0, 3, 1, NULL, 'B7', 5), (29, 1, 0, 2, NULL, 'B8', 5), (56, 0, 2, 1, NULL, 'B9', 5), (31, 2, 0, 2, NULL, 'B10', 5), 
+(43, 0, 1, 1, NULL, 'B11', 5), (20, 1, 0, 2, NULL, 'B12', 5), (60, 0, 3, 1, NULL, 'B13', 5), (38, 2, 0, 2, NULL, 'B14', 5), (46, 0, 1, 1, NULL, 'B15', 5), 
+(25, 1, 0, 2, NULL, 'B16', 5), (50, 0, 3, 1, NULL, 'B17', 5), (33, 2, 0, 2, NULL, 'B18', 5), (47, 0, 2, 1, NULL, 'B19', 5), (22, 1, 0, 2, NULL, 'B20', 5), 
+(59, 0, 1, 1, NULL, 'B21', 5),
+-- BLOCO C (3 Salas)
+(36, 2, 0, 2, NULL, 'C1', 5), (41, 0, 3, 1, NULL, 'C2', 5), (27, 1, 0, 2, NULL, 'C3', 5),
+
+-- =================================================================
+-- IO (ID 6)
+-- =================================================================
+-- BLOCO A (6 Salas)
+(30, 0, 1, 2, NULL, 'A1', 6), (55, 1, 0, 1, NULL, 'A2', 6), (40, 0, 2, 2, NULL, 'A3', 6), (25, 2, 0, 1, NULL, 'A4', 6), (60, 0, 3, 2, NULL, 'A5', 6), (35, 1, 0, 1, NULL, 'A6', 6), 
+-- BLOCO B (20 Salas)
+(48, 0, 1, 2, NULL, 'B1', 6), (22, 2, 0, 1, NULL, 'B2', 6), (52, 0, 2, 2, NULL, 'B3', 6), (38, 1, 0, 1, NULL, 'B4', 6), (45, 0, 3, 2, NULL, 'B5', 6), 
+(28, 2, 0, 1, NULL, 'B6', 6), (59, 0, 1, 2, NULL, 'B7', 6), (31, 1, 0, 1, NULL, 'B8', 6), (42, 0, 2, 2, NULL, 'B9', 6), (20, 2, 0, 1, NULL, 'B10', 6), 
+(50, 0, 3, 2, NULL, 'B11', 6), (33, 1, 0, 1, NULL, 'B12', 6), (47, 0, 1, 2, NULL, 'B13', 6), (24, 2, 0, 1, NULL, 'B14', 6), (56, 0, 2, 2, NULL, 'B15', 6), 
+(39, 1, 0, 1, NULL, 'B16', 6), (41, 0, 3, 2, NULL, 'B17', 6), (26, 2, 0, 1, NULL, 'B18', 6), (53, 0, 1, 2, NULL, 'B19', 6), (32, 1, 0, 1, NULL, 'B20', 6), 
+-- BLOCO C (2 Salas)
+(44, 0, 2, 2, NULL, 'C1', 6), (29, 2, 0, 1, NULL, 'C2', 6),
+
+-- =================================================================
+-- ECA (ID 7)
+-- =================================================================
+-- BLOCO A (4 Salas)
+(40, 0, 3, 1, NULL, 'A1', 7), (25, 1, 0, 2, NULL, 'A2', 7), (55, 0, 2, 1, NULL, 'A3', 7), (35, 2, 0, 2, NULL, 'A4', 7), 
+-- BLOCO B (14 Salas)
+(48, 0, 1, 1, NULL, 'B1', 7), (22, 1, 0, 2, NULL, 'B2', 7), (59, 0, 3, 1, NULL, 'B3', 7), (31, 2, 0, 2, NULL, 'B4', 7), (42, 0, 2, 1, NULL, 'B5', 7), 
+(20, 1, 0, 2, NULL, 'B6', 7), (50, 0, 1, 1, NULL, 'B7', 7), (33, 2, 0, 2, NULL, 'B8', 7), (47, 0, 3, 1, NULL, 'B9', 7), (24, 1, 0, 2, NULL, 'B10', 7), 
+(56, 0, 2, 1, NULL, 'B11', 7), (39, 2, 0, 2, NULL, 'B12', 7), (41, 0, 1, 1, NULL, 'B13', 7), (26, 1, 0, 2, NULL, 'B14', 7), 
+-- BLOCO C (2 Salas)
+(53, 0, 3, 1, NULL, 'C1', 7), (32, 2, 0, 2, NULL, 'C2', 7);
 
 -- tabela vinculo_trabalho
 CREATE TABLE vinculo_trabalho (
     cargo VARCHAR(40) NOT NULL,
     data_inicio DATE NOT NULL,
-    data_fim DATE NOT NULL,
+    data_fim DATE,
     tipo_vinculo SMALLINT CHECK (tipo_vinculo in (1,2)), -- 1 Temporário, 2 Efetivo
     nusp_associado INTEGER NOT NULL,
     id_instituto INTEGER,
@@ -1479,6 +1756,247 @@ CREATE TABLE vinculo_trabalho (
     FOREIGN KEY (id_instituto) REFERENCES instituto(id_instituto)
         ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+TRUNCATE TABLE vinculo_trabalho CASCADE; -- Use esta linha se precisar limpar a tabela antes da inserção
+
+-- TRUNCATE TABLE vinculo_trabalho; -- Use esta linha se precisar limpar a tabela antes da inserção
+
+INSERT INTO vinculo_trabalho (cargo, data_inicio, data_fim, tipo_vinculo, nusp_associado, id_instituto) VALUES
+-- =================================================================================
+-- VÍNCULOS DE FUNCIONÁRIOS (NUSP 0 a 69) - 10 por Instituto (ID 1 a 7)
+-- Os NUSP de funcionários já foram mapeados nos scripts anteriores
+-- =================================================================================
+-- Instituto 1 (NUSP 0 a 9)
+('Analista de TI', '2021-01-10', NULL, 2, 0, 1),
+('Assistente Administrativo', '2021-03-15', NULL, 2, 1, 1),
+('Secretário Executivo', '2021-05-20', NULL, 2, 2, 1),
+('Técnico de Laboratório', '2021-07-01', NULL, 2, 3, 1),
+('Bibliotecário', '2021-08-12', NULL, 2, 4, 1),
+('Auxiliar de Serviços Gerais', '2021-09-25', NULL, 2, 5, 1),
+('Motorista', '2021-10-10', NULL, 2, 6, 1),
+('Recepcionista', '2021-11-15', NULL, 2, 7, 1),
+('Analista de Dados', '2021-12-01', NULL, 2, 8, 1),
+('Assistente Financeiro', '2022-01-20', NULL, 2, 9, 1),
+
+-- Instituto 2 (NUSP 10 a 19)
+('Analista de TI', '2021-02-14', NULL, 2, 10, 2),
+('Assistente Administrativo', '2021-04-01', NULL, 2, 11, 2),
+('Secretário Executivo', '2021-06-05', NULL, 2, 12, 2),
+('Técnico de Laboratório', '2021-07-20', NULL, 2, 13, 2),
+('Bibliotecário', '2021-09-01', NULL, 2, 14, 2),
+('Auxiliar de Serviços Gerais', '2021-10-05', NULL, 2, 15, 2),
+('Motorista', '2021-11-01', NULL, 2, 16, 2),
+('Recepcionista', '2021-12-10', NULL, 2, 17, 2),
+('Analista de Dados', '2022-01-01', NULL, 2, 18, 2),
+('Assistente Financeiro', '2022-02-15', NULL, 2, 19, 2),
+
+-- Instituto 3 (NUSP 20 a 29)
+('Analista de TI', '2021-03-22', NULL, 2, 20, 3),
+('Assistente Administrativo', '2021-05-10', NULL, 2, 21, 3),
+('Secretário Executivo', '2021-07-05', NULL, 2, 22, 3),
+('Técnico de Laboratório', '2021-08-01', NULL, 2, 23, 3),
+('Bibliotecário', '2021-09-15', NULL, 2, 24, 3),
+('Auxiliar de Serviços Gerais', '2021-10-30', NULL, 2, 25, 3),
+('Motorista', '2021-11-20', NULL, 2, 26, 3),
+('Recepcionista', '2021-12-25', NULL, 2, 27, 3),
+('Analista de Dados', '2022-01-15', NULL, 2, 28, 3),
+('Assistente Financeiro', '2022-03-01', NULL, 2, 29, 3),
+
+-- Instituto 4 (NUSP 30 a 39)
+('Analista de TI', '2021-04-10', NULL, 2, 30, 4),
+('Assistente Administrativo', '2021-06-01', NULL, 2, 31, 4),
+('Secretário Executivo', '2021-07-15', NULL, 2, 32, 4),
+('Técnico de Laboratório', '2021-08-25', NULL, 2, 33, 4),
+('Bibliotecário', '2021-10-10', NULL, 2, 34, 4),
+('Auxiliar de Serviços Gerais', '2021-11-05', NULL, 2, 35, 4),
+('Motorista', '2021-12-01', NULL, 2, 36, 4),
+('Recepcionista', '2022-01-05', NULL, 2, 37, 4),
+('Analista de Dados', '2022-02-01', NULL, 2, 38, 4),
+('Assistente Financeiro', '2022-03-15', NULL, 2, 39, 4),
+
+-- Instituto 5 (NUSP 40 a 49)
+('Analista de TI', '2021-05-01', NULL, 2, 40, 5),
+('Assistente Administrativo', '2021-07-05', NULL, 2, 41, 5),
+('Secretário Executivo', '2021-08-10', NULL, 2, 42, 5),
+('Técnico de Laboratório', '2021-09-01', NULL, 2, 43, 5),
+('Bibliotecário', '2021-10-20', NULL, 2, 44, 5),
+('Auxiliar de Serviços Gerais', '2021-11-15', NULL, 2, 45, 5),
+('Motorista', '2021-12-20', NULL, 2, 46, 5),
+('Recepcionista', '2022-01-25', NULL, 2, 47, 5),
+('Analista de Dados', '2022-02-28', NULL, 2, 48, 5),
+('Assistente Financeiro', '2022-04-01', NULL, 2, 49, 5),
+
+-- Instituto 6 (NUSP 50 a 59)
+('Analista de TI', '2021-06-15', NULL, 2, 50, 6),
+('Assistente Administrativo', '2021-08-01', NULL, 2, 51, 6),
+('Secretário Executivo', '2021-09-10', NULL, 2, 52, 6),
+('Técnico de Laboratório', '2021-10-05', NULL, 2, 53, 6),
+('Bibliotecário', '2021-11-01', NULL, 2, 54, 6),
+('Auxiliar de Serviços Gerais', '2021-12-10', NULL, 2, 55, 6),
+('Motorista', '2022-01-01', NULL, 2, 56, 6),
+('Recepcionista', '2022-02-05', NULL, 2, 57, 6),
+('Analista de Dados', '2022-03-10', NULL, 2, 58, 6),
+('Assistente Financeiro', '2022-04-15', NULL, 2, 59, 6),
+
+-- Instituto 7 (NUSP 60 a 69)
+('Analista de TI', '2021-07-01', NULL, 2, 60, 7),
+('Assistente Administrativo', '2021-09-05', NULL, 2, 61, 7),
+('Secretário Executivo', '2021-10-15', NULL, 2, 62, 7),
+('Técnico de Laboratório', '2021-11-01', NULL, 2, 63, 7),
+('Bibliotecário', '2021-12-05', NULL, 2, 64, 7),
+('Auxiliar de Serviços Gerais', '2022-01-01', NULL, 2, 65, 7),
+('Motorista', '2022-02-10', NULL, 2, 66, 7),
+('Recepcionista', '2022-03-01', NULL, 2, 67, 7),
+('Analista de Dados', '2022-04-10', NULL, 2, 68, 7),
+('Assistente Financeiro', '2022-05-01', NULL, 2, 69, 7);
+
+-- TRUNCATE TABLE vinculo_trabalho; -- Use esta linha se precisar limpar a tabela antes da inserção
+-- Nota: O bloco de 70 funcionários (NUSP 0-69) foi omitido aqui por concisão, mas ele deve ser inserido conforme o script anterior.
+
+INSERT INTO vinculo_trabalho (cargo, data_inicio, data_fim, tipo_vinculo, nusp_associado, id_instituto) VALUES
+-- =================================================================================
+-- VÍNCULOS DE PROFESSORES (105 NUSPs fornecidos) - 15 por Instituto (5 N1, 5 N2, 5 N3)
+-- Tipo 2 (Efetivo)
+-- =================================================================================
+-- Instituto 1 (NUSP 1 a 15 da lista)
+-- N1: 43276, 20862, 33527, 29064, 39924
+('Professor Nível 1', '2018-01-10', NULL, 2, 43276, 1),
+('Professor Nível 1', '2018-03-10', NULL, 2, 20862, 1),
+('Professor Nível 1', '2018-05-10', NULL, 2, 33527, 1),
+('Professor Nível 1', '2018-07-10', NULL, 2, 29064, 1),
+('Professor Nível 1', '2018-09-10', NULL, 2, 39924, 1),
+-- N2: 32393, 81551, 40794, 22686, 37166
+('Professor Nível 2', '2019-01-10', NULL, 2, 32393, 1),
+('Professor Nível 2', '2019-03-10', NULL, 2, 81551, 1),
+('Professor Nível 2', '2019-05-10', NULL, 2, 40794, 1),
+('Professor Nível 2', '2019-07-10', NULL, 2, 22686, 1),
+('Professor Nível 2', '2019-09-10', NULL, 2, 37166, 1),
+-- N3: 48938, 38996, 66999, 43624, 20040
+('Professor Nível 3', '2020-01-10', NULL, 2, 48938, 1),
+('Professor Nível 3', '2020-03-10', NULL, 2, 38996, 1),
+('Professor Nível 3', '2020-05-10', NULL, 2, 66999, 1),
+('Professor Nível 3', '2020-07-10', NULL, 2, 43624, 1),
+('Professor Nível 3', '2020-09-10', NULL, 2, 20040, 1),
+
+-- Instituto 2 (NUSP 16 a 30 da lista)
+-- N1: 69340, 72165, 64433, 71847, 60414
+('Professor Nível 1', '2018-01-15', NULL, 2, 69340, 2),
+('Professor Nível 1', '2018-03-15', NULL, 2, 72165, 2),
+('Professor Nível 1', '2018-05-15', NULL, 2, 64433, 2),
+('Professor Nível 1', '2018-07-15', NULL, 2, 71847, 2),
+('Professor Nível 1', '2018-09-15', NULL, 2, 60414, 2),
+-- N2: 26427, 42436, 81388, 63896, 42961
+('Professor Nível 2', '2019-01-15', NULL, 2, 26427, 2),
+('Professor Nível 2', '2019-03-15', NULL, 2, 42436, 2),
+('Professor Nível 2', '2019-05-15', NULL, 2, 81388, 2),
+('Professor Nível 2', '2019-07-15', NULL, 2, 63896, 2),
+('Professor Nível 2', '2019-09-15', NULL, 2, 42961, 2),
+-- N3: 53857, 81967, 55012, 61569, 96692
+('Professor Nível 3', '2020-01-15', NULL, 2, 53857, 2),
+('Professor Nível 3', '2020-03-15', NULL, 2, 81967, 2),
+('Professor Nível 3', '2020-05-15', NULL, 2, 55012, 2),
+('Professor Nível 3', '2020-07-15', NULL, 2, 61569, 2),
+('Professor Nível 3', '2020-09-15', NULL, 2, 96692, 2),
+
+-- Instituto 3 (NUSP 31 a 45 da lista)
+-- N1: 58752, 73457, 29276, 97905, 73085
+('Professor Nível 1', '2018-02-01', NULL, 2, 58752, 3),
+('Professor Nível 1', '2018-04-01', NULL, 2, 73457, 3),
+('Professor Nível 1', '2018-06-01', NULL, 2, 29276, 3),
+('Professor Nível 1', '2018-08-01', NULL, 2, 97905, 3),
+('Professor Nível 1', '2018-10-01', NULL, 2, 73085, 3),
+-- N2: 52470, 52156, 38335, 75851, 95413
+('Professor Nível 2', '2019-02-01', NULL, 2, 52470, 3),
+('Professor Nível 2', '2019-04-01', NULL, 2, 52156, 3),
+('Professor Nível 2', '2019-06-01', NULL, 2, 38335, 3),
+('Professor Nível 2', '2019-08-01', NULL, 2, 75851, 3),
+('Professor Nível 2', '2019-10-01', NULL, 2, 95413, 3),
+-- N3: 90340, 84656, 75959, 19078, 89199
+('Professor Nível 3', '2020-02-01', NULL, 2, 90340, 3),
+('Professor Nível 3', '2020-04-01', NULL, 2, 84656, 3),
+('Professor Nível 3', '2020-06-01', NULL, 2, 75959, 3),
+('Professor Nível 3', '2020-08-01', NULL, 2, 19078, 3),
+('Professor Nível 3', '2020-10-01', NULL, 2, 89199, 3),
+
+-- Instituto 4 (NUSP 46 a 60 da lista)
+-- N1: 51371, 14821, 46661, 89806, 68622
+('Professor Nível 1', '2018-02-15', NULL, 2, 51371, 4),
+('Professor Nível 1', '2018-04-15', NULL, 2, 14821, 4),
+('Professor Nível 1', '2018-06-15', NULL, 2, 46661, 4),
+('Professor Nível 1', '2018-08-15', NULL, 2, 89806, 4),
+('Professor Nível 1', '2018-10-15', NULL, 2, 68622, 4),
+-- N2: 92623, 12345, 56789, 90123, 24680
+('Professor Nível 2', '2019-02-15', NULL, 2, 92623, 4),
+('Professor Nível 2', '2019-04-15', NULL, 2, 12345, 4),
+('Professor Nível 2', '2019-06-15', NULL, 2, 56789, 4),
+('Professor Nível 2', '2019-08-15', NULL, 2, 90123, 4),
+('Professor Nível 2', '2019-10-15', NULL, 2, 24680, 4),
+-- N3: 13579, 86420, 75319, 64208, 53197
+('Professor Nível 3', '2020-02-15', NULL, 2, 13579, 4),
+('Professor Nível 3', '2020-04-15', NULL, 2, 86420, 4),
+('Professor Nível 3', '2020-06-15', NULL, 2, 75319, 4),
+('Professor Nível 3', '2020-08-15', NULL, 2, 64208, 4),
+('Professor Nível 3', '2020-10-15', NULL, 2, 53197, 4),
+
+-- Instituto 5 (NUSP 61 a 75 da lista)
+-- N1: 42086, 31975, 20864, 97531, 86429
+('Professor Nível 1', '2018-03-01', NULL, 2, 42086, 5),
+('Professor Nível 1', '2018-05-01', NULL, 2, 31975, 5),
+('Professor Nível 1', '2018-07-01', NULL, 2, 20864, 5),
+('Professor Nível 1', '2018-09-01', NULL, 2, 97531, 5),
+('Professor Nível 1', '2018-11-01', NULL, 2, 86429, 5),
+-- N2: 75318, 64207, 53196, 42085, 31974
+('Professor Nível 2', '2019-03-01', NULL, 2, 75318, 5),
+('Professor Nível 2', '2019-05-01', NULL, 2, 64207, 5),
+('Professor Nível 2', '2019-07-01', NULL, 2, 53196, 5),
+('Professor Nível 2', '2019-09-01', NULL, 2, 42085, 5),
+('Professor Nível 2', '2019-11-01', NULL, 2, 31974, 5),
+-- N3: 20863, 97530, 86428, 75317, 64206
+('Professor Nível 3', '2020-03-01', NULL, 2, 20863, 5),
+('Professor Nível 3', '2020-05-01', NULL, 2, 97530, 5),
+('Professor Nível 3', '2020-07-01', NULL, 2, 86428, 5),
+('Professor Nível 3', '2020-09-01', NULL, 2, 75317, 5),
+('Professor Nível 3', '2020-11-01', NULL, 2, 64206, 5),
+
+-- Instituto 6 (NUSP 76 a 90 da lista)
+-- N1: 53195, 42084, 31973, 97529, 86427
+('Professor Nível 1', '2018-03-15', NULL, 2, 53195, 6),
+('Professor Nível 1', '2018-05-15', NULL, 2, 42084, 6),
+('Professor Nível 1', '2018-07-15', NULL, 2, 31973, 6),
+('Professor Nível 1', '2018-09-15', NULL, 2, 97529, 6),
+('Professor Nível 1', '2018-11-15', NULL, 2, 86427, 6),
+-- N2: 75316, 64205, 53194, 42083, 31972
+('Professor Nível 2', '2019-03-15', NULL, 2, 75316, 6),
+('Professor Nível 2', '2019-05-15', NULL, 2, 64205, 6),
+('Professor Nível 2', '2019-07-15', NULL, 2, 53194, 6),
+('Professor Nível 2', '2019-09-15', NULL, 2, 42083, 6),
+('Professor Nível 2', '2019-11-15', NULL, 2, 31972, 6),
+-- N3: 20861, 97528, 86426, 75315, 64204
+('Professor Nível 3', '2020-03-15', NULL, 2, 20861, 6),
+('Professor Nível 3', '2020-05-15', NULL, 2, 97528, 6),
+('Professor Nível 3', '2020-07-15', NULL, 2, 86426, 6),
+('Professor Nível 3', '2020-09-15', NULL, 2, 75315, 6),
+('Professor Nível 3', '2020-11-15', NULL, 2, 64204, 6),
+
+-- Instituto 7 (NUSP 91 a 105 da lista)
+-- N1: 53193, 42082, 31971, 20860, 97527
+('Professor Nível 1', '2018-04-01', NULL, 2, 53193, 7),
+('Professor Nível 1', '2018-06-01', NULL, 2, 42082, 7),
+('Professor Nível 1', '2018-08-01', NULL, 2, 31971, 7),
+('Professor Nível 1', '2018-10-01', NULL, 2, 20860, 7),
+('Professor Nível 1', '2018-12-01', NULL, 2, 97527, 7),
+-- N2: 86425, 75314, 64203, 53192, 42081
+('Professor Nível 2', '2019-04-01', NULL, 2, 86425, 7),
+('Professor Nível 2', '2019-06-01', NULL, 2, 75314, 7),
+('Professor Nível 2', '2019-08-01', NULL, 2, 64203, 7),
+('Professor Nível 2', '2019-10-01', NULL, 2, 53192, 7),
+('Professor Nível 2', '2019-12-01', NULL, 2, 42081, 7),
+-- N3: 31970, 20859, 97526, 86424, 75313
+('Professor Nível 3', '2020-04-01', NULL, 2, 31970, 7),
+('Professor Nível 3', '2020-06-01', NULL, 2, 20859, 7),
+('Professor Nível 3', '2020-08-01', NULL, 2, 97526, 7),
+('Professor Nível 3', '2020-10-01', NULL, 2, 86424, 7),
+('Professor Nível 3', '2020-12-01', NULL, 2, 75313, 7);
 
 -- tabela leciona
 CREATE TABLE leciona (
