@@ -1,0 +1,1280 @@
+CREATE SCHEMA IF NOT EXISTS public;
+
+-- Tabela instituto
+DROP TABLE IF EXISTS public.instituto CASCADE;
+CREATE TABLE IF NOT EXISTS public.instituto (
+    id_instituto SERIAL,
+    sigla varchar(10) UNIQUE NOT NULL,
+    contato varchar(120) UNIQUE,
+    email varchar(150),
+    endereco varchar(100) UNIQUE,
+    logradouro varchar(40),
+    telefone varchar(20),
+    cep varchar(8),
+    PRIMARY KEY (id_instituto),
+    CHECK (LENGTH(cep) = 8)
+);
+
+-- Tabela usuario
+DROP TABLE IF EXISTS public.usuario CASCADE;
+CREATE TABLE IF NOT EXISTS public.usuario (
+    email varchar(150) NOT NULL UNIQUE,
+    senha varchar(50) NOT NULL,
+    nusp integer,
+    rg char(9) UNIQUE,
+    foto text,
+    nome varchar(100),
+    pnome varchar(50),
+    unome varchar(50),
+    PRIMARY KEY (nusp),
+    CHECK (LENGTH(senha) >= 3),
+    CHECK (nusp >= 0)
+);
+
+-- Tabela departamento
+DROP TABLE IF EXISTS public.departamento CASCADE;
+CREATE TABLE IF NOT EXISTS public.departamento (
+    id_departamento SERIAL,
+    nome varchar(100) UNIQUE NOT NULL,
+    sigla varchar(20) UNIQUE NOT NULL,
+    contato varchar(50) UNIQUE,
+    email varchar(150),
+    telefone varchar(20),
+    id_instituto integer NOT NULL,
+    PRIMARY KEY (id_departamento)
+);
+
+-- Tabela disciplina
+DROP TABLE IF EXISTS public.disciplina CASCADE;
+CREATE TABLE IF NOT EXISTS public.disciplina (
+    sigla varchar(20),
+    nome varchar(150) NOT NULL,
+    objetivo varchar(500),
+    conteudo varchar(500),
+    bibliografia varchar(500),
+    id_departamento integer NOT NULL,
+    PRIMARY KEY (sigla)
+);
+
+-- Tabela curso
+DROP TABLE IF EXISTS public.curso CASCADE;
+CREATE TABLE IF NOT EXISTS public.curso (
+    nome varchar(50) NOT NULL,
+    modalidade varchar(20) NOT NULL,
+    periodo varchar(20) NOT NULL ,
+    id_curso SERIAL,
+    carga_horaria integer,
+    id_instituto integer NOT NULL,
+    PRIMARY KEY (id_curso),
+    CHECK (carga_horaria > 0),
+    CHECK (modalidade IN ('presencial', 'EAD', 'híbrido')),
+    CHECK (periodo IN ('matutino', 'vespertino', 'noturno', 'integral'))
+);
+
+-- Tabela grade
+DROP TABLE IF EXISTS public.grade CASCADE;
+CREATE TABLE IF NOT EXISTS public.grade (
+    tipo_disciplina smallint NOT NULL,
+    id_curso integer NOT NULL,
+    sigla_disciplina varchar(20) NOT NULL,
+    PRIMARY KEY (id_curso, sigla_disciplina),
+    CHECK (tipo_disciplina IN (1, 2)) -- 1=obrigatória, 2=optativa
+);
+
+-- Tabela sala
+DROP TABLE IF EXISTS public.sala CASCADE;
+CREATE TABLE IF NOT EXISTS public.sala (
+    id_sala varchar(4),
+    lot_max integer NOT NULL,
+    descricao varchar(240),
+    id_instituto integer NOT NULL,
+    PRIMARY KEY (id_sala, id_instituto),
+    CHECK (lot_max > 0)
+);
+
+-- Tabela avaliacao_sala
+DROP TABLE IF EXISTS public.avaliacao_sala CASCADE;
+CREATE TABLE IF NOT EXISTS public.avaliacao_sala (
+    time_stamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    nota decimal NOT NULL,
+    comentario varchar(240) NOT NULL,
+    nusp_avaliador integer NOT NULL,
+    id_sala varchar(4) NOT NULL,
+    id_instituto integer NOT NULL,
+    PRIMARY KEY (time_stamp, nusp_avaliador, id_sala, id_instituto),
+    CHECK (nota >= 0 AND nota <= 10)
+);
+
+-- Tabela aluno
+DROP TABLE IF EXISTS public.aluno CASCADE;
+CREATE TABLE IF NOT EXISTS public.aluno (
+    num_matricula integer NOT NULL UNIQUE,
+    nusp_usuario integer,
+    id_curso integer,
+    PRIMARY KEY (nusp_usuario),
+    CHECK (num_matricula > 0)
+);
+
+-- Tabela avaliacao_monitor
+DROP TABLE IF EXISTS public.avaliacao_monitor CASCADE;
+CREATE TABLE IF NOT EXISTS public.avaliacao_monitor (
+    nota decimal NOT NULL,
+    comentario varchar(240) NOT NULL,
+    nusp_aluno integer NOT NULL,
+    nusp_monitor integer NOT NULL,
+    time_stamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (nusp_aluno, nusp_monitor, time_stamp),
+    CHECK (nota >= 0 AND nota <= 10)
+);
+
+-- Tabela associado
+DROP TABLE IF EXISTS public.associado CASCADE;
+CREATE TABLE IF NOT EXISTS public.associado (
+    sala varchar(15),
+    num integer,
+    bloco varchar(6),
+    nusp_usuario integer,
+    PRIMARY KEY (nusp_usuario)
+);
+
+-- Tabela vinculo_trabalho
+DROP TABLE IF EXISTS public.vinculo_trabalho CASCADE;
+CREATE TABLE IF NOT EXISTS public.vinculo_trabalho (
+    cargo varchar(40) NOT NULL,
+    data_inicio date NOT NULL,
+    data_fim date,
+    tipo_vinculo smallint NOT NULL,
+    nusp_associado integer NOT NULL,
+    id_instituto integer NOT NULL,
+    PRIMARY KEY (nusp_associado, id_instituto),
+    CHECK (data_fim IS NULL OR data_fim >= data_inicio),
+    CHECK (tipo_vinculo IN (1, 2)) -- 1 Temporário, 2 Efetivado 
+);
+
+-- Tabela turma
+DROP TABLE IF EXISTS public.turma CASCADE;
+CREATE TABLE IF NOT EXISTS public.turma (
+    sigla_disciplina varchar(20) NOT NULL,
+    codigo_turma varchar(5) NOT NULL,
+    vigencia varchar(10) NOT NULL,
+    ano integer NOT NULL,
+    semestre smallint NOT NULL,
+    PRIMARY KEY (sigla_disciplina, codigo_turma, vigencia),
+    CHECK (semestre IN (1, 2)),
+    CHECK (ano >= 1900 AND ano <= 2100)
+);
+
+-- Tabela representa_disciplina
+DROP TABLE IF EXISTS public.representa_disciplina CASCADE;
+CREATE TABLE IF NOT EXISTS public.representa_disciplina (
+    nusp_professor integer NOT NULL,
+    sigla_disciplina varchar(20) NOT NULL,
+    data_inicio date,
+    data_fim date,
+    PRIMARY KEY (nusp_professor, sigla_disciplina),
+    CHECK (data_fim IS NULL OR data_fim >= data_inicio)
+);
+
+-- Tabela oferta_aula
+DROP TABLE IF EXISTS public.oferta_aula CASCADE;
+CREATE TABLE IF NOT EXISTS public.oferta_aula (
+    id_oferta SERIAL,
+    id_sala varchar(4),
+    id_instituto integer,
+    sigla_disciplina varchar(20) NOT NULL,
+    codigo_turma varchar(5) NOT NULL,
+    vigencia varchar(10) NOT NULL,
+    PRIMARY KEY (id_oferta)
+);
+
+-- Tabela pedido_reserva
+DROP TABLE IF EXISTS public.pedido_reserva CASCADE;
+CREATE TABLE IF NOT EXISTS public.pedido_reserva (
+    id_pedido SERIAL,
+    proposito text NOT NULL,
+    horario_geracao timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_reserva date NOT NULL,
+    hora_inicio_reserva time NOT NULL,
+    hora_fim_reserva time NOT NULL,
+    status smallint NOT NULL,
+    timestamp_veredito timestamp,
+    id_sala varchar(4) NOT NULL,
+    id_instituto integer NOT NULL,
+    nusp_solicitante integer NOT NULL,
+    nusp_aprovador integer,
+    PRIMARY KEY (id_pedido),
+    CHECK (hora_fim_reserva > hora_inicio_reserva),
+    CHECK (status IN (1, 2, 3)) -- 1=pendente, 2=aprovado, 3=rejeitado
+);
+
+-- Tabela coordenacao
+DROP TABLE IF EXISTS public.coordenacao CASCADE;
+CREATE TABLE IF NOT EXISTS public.coordenacao (
+    nusp_professor integer NOT NULL,
+    id_departamento integer NOT NULL,
+    data_inicio date NOT NULL,
+    data_fim date,
+    PRIMARY KEY (nusp_professor, id_departamento),
+    CHECK (data_fim IS NULL OR data_fim >= data_inicio)
+);
+
+-- Tabela avaliacao_professor
+DROP TABLE IF EXISTS public.avaliacao_professor CASCADE;
+CREATE TABLE IF NOT EXISTS public.avaliacao_professor (
+    nota decimal NOT NULL,
+    comentario varchar(240) NOT NULL,
+    nusp_aluno integer NOT NULL,
+    nusp_professor integer NOT NULL,
+    time_stamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (nusp_aluno, nusp_professor, time_stamp),
+    CHECK (nota >= 0 AND nota <= 10)
+);
+
+-- Tabela professor
+DROP TABLE IF EXISTS public.professor CASCADE;
+CREATE TABLE IF NOT EXISTS public.professor (
+    nusp_associado integer,
+    PRIMARY KEY (nusp_associado)
+);
+
+-- Tabela participa_em
+DROP TABLE IF EXISTS public.participa_em CASCADE;
+CREATE TABLE IF NOT EXISTS public.participa_em (
+    nusp_aluno integer NOT NULL,
+    media_final numeric,
+    status smallint NOT NULL,
+    frequencia numeric,
+    sigla_disciplina varchar(20) NOT NULL,
+    codigo_turma varchar(5) NOT NULL,
+    vigencia varchar(10) NOT NULL,
+    PRIMARY KEY (nusp_aluno, sigla_disciplina, codigo_turma, vigencia),
+    CHECK (media_final IS NULL OR (media_final >= 0 AND media_final <= 10)),
+    CHECK (frequencia IS NULL OR (frequencia >= 0 AND frequencia <= 100)),
+    CHECK (status IN (1,2)) -- 1 Ativo, 2 Desativado 
+);
+
+-- Tabela horario_aula
+DROP TABLE IF EXISTS public.horario_aula CASCADE;
+CREATE TABLE IF NOT EXISTS public.horario_aula (
+    id_oferta integer,
+    dia_semana text NOT NULL,
+    hora_inicio time NOT NULL,
+    hora_fim time NOT NULL,
+    PRIMARY KEY (id_oferta, dia_semana, hora_inicio),
+    CHECK (hora_fim > hora_inicio)
+);
+
+-- Tabela recursos
+DROP TABLE IF EXISTS public.recursos CASCADE;
+CREATE TABLE IF NOT EXISTS public.recursos (
+    n_cadeiras smallint,
+    n_ventiladores smallint,
+    n_ar_condicionado smallint,
+    n_lousas smallint,
+    descricao varchar(240),
+    id_sala varchar(4),
+    id_instituto integer NOT NULL,
+    PRIMARY KEY (id_sala, id_instituto),
+    CHECK (n_cadeiras >= 0),
+    CHECK (n_ventiladores >= 0),
+    CHECK (n_ar_condicionado >= 0),
+    CHECK (n_lousas >= 0)
+);
+
+-- Tabela requisito
+DROP TABLE IF EXISTS public.requisito CASCADE;
+CREATE TABLE IF NOT EXISTS public.requisito (
+    sigla_disciplina_requerente varchar(20) NOT NULL,
+    sigla_disciplina_requerida varchar(20) NOT NULL,
+    PRIMARY KEY (sigla_disciplina_requerente, sigla_disciplina_requerida),
+    CHECK (sigla_disciplina_requerente <> sigla_disciplina_requerida)
+);
+
+-- Tabela funcionario
+DROP TABLE IF EXISTS public.funcionario CASCADE;
+CREATE TABLE IF NOT EXISTS public.funcionario (
+    nusp_associado integer,
+    PRIMARY KEY (nusp_associado)
+);
+
+-- Tabela leciona
+DROP TABLE IF EXISTS public.leciona CASCADE;
+CREATE TABLE IF NOT EXISTS public.leciona (
+    nusp_professor integer NOT NULL,
+    sigla_disciplina varchar(20) NOT NULL,
+    codigo_turma varchar(5) NOT NULL,
+    vigencia varchar(10) NOT NULL,
+    observacoes varchar(40),
+    PRIMARY KEY (nusp_professor, sigla_disciplina, codigo_turma, vigencia)
+);
+
+-- Tabela monitor
+DROP TABLE IF EXISTS public.monitor CASCADE;
+CREATE TABLE IF NOT EXISTS public.monitor (
+    nusp_aluno integer,
+    PRIMARY KEY (nusp_aluno)
+);
+
+-- Tabela monitoria
+DROP TABLE IF EXISTS public.monitoria CASCADE;
+CREATE TABLE IF NOT EXISTS public.monitoria (
+    carga_horaria integer NOT NULL,
+    nusp_monitor integer NOT NULL,
+    sigla_disciplina varchar(20) NOT NULL,
+    codigo_turma varchar(5) NOT NULL,
+    vigencia varchar(10) NOT NULL,
+    PRIMARY KEY (nusp_monitor, sigla_disciplina, codigo_turma, vigencia),
+    CHECK (carga_horaria > 0)
+);
+
+-- ========================================
+-- FOREIGN KEYS
+-- ========================================
+
+-- Departamento
+ALTER TABLE public.departamento
+    ADD CONSTRAINT fk_departamento_id_instituto
+    FOREIGN KEY(id_instituto) REFERENCES public.instituto(id_instituto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Disciplina
+ALTER TABLE public.disciplina
+    ADD CONSTRAINT fk_disciplina_id_departamento
+    FOREIGN KEY(id_departamento) REFERENCES public.departamento(id_departamento)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Curso
+ALTER TABLE public.curso
+    ADD CONSTRAINT fk_curso_id_instituto
+    FOREIGN KEY(id_instituto) REFERENCES public.instituto(id_instituto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Grade
+ALTER TABLE public.grade
+    ADD CONSTRAINT fk_grade_id_curso
+    FOREIGN KEY(id_curso) REFERENCES public.curso(id_curso)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.grade
+    ADD CONSTRAINT fk_grade_sigla_disciplina
+    FOREIGN KEY(sigla_disciplina) REFERENCES public.disciplina(sigla)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Sala
+ALTER TABLE public.sala
+    ADD CONSTRAINT fk_sala_id_instituto
+    FOREIGN KEY(id_instituto) REFERENCES public.instituto(id_instituto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Avaliacao Sala
+ALTER TABLE public.avaliacao_sala
+    ADD CONSTRAINT fk_avaliacao_sala_usuario
+    FOREIGN KEY(nusp_avaliador) REFERENCES public.usuario(nusp)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.avaliacao_sala
+    ADD CONSTRAINT fk_avaliacao_sala_sala
+    FOREIGN KEY(id_sala, id_instituto) REFERENCES public.sala(id_sala, id_instituto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Aluno
+ALTER TABLE public.aluno
+    ADD CONSTRAINT fk_aluno_usuario
+    FOREIGN KEY(nusp_usuario) REFERENCES public.usuario(nusp)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.aluno
+    ADD CONSTRAINT fk_aluno_curso
+    FOREIGN KEY(id_curso) REFERENCES public.curso(id_curso)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE;
+
+---
+
+-- Associado
+ALTER TABLE public.associado
+    ADD CONSTRAINT fk_associado_usuario
+    FOREIGN KEY(nusp_usuario) REFERENCES public.usuario(nusp)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Professor
+ALTER TABLE public.professor
+    ADD CONSTRAINT fk_professor_associado
+    FOREIGN KEY(nusp_associado) REFERENCES public.associado(nusp_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Funcionario
+ALTER TABLE public.funcionario
+    ADD CONSTRAINT fk_funcionario_associado
+    FOREIGN KEY(nusp_associado) REFERENCES public.associado(nusp_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Monitor
+ALTER TABLE public.monitor
+    ADD CONSTRAINT fk_monitor_aluno
+    FOREIGN KEY(nusp_aluno) REFERENCES public.aluno(nusp_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Avaliacao Monitor
+ALTER TABLE public.avaliacao_monitor
+    ADD CONSTRAINT fk_avaliacao_monitor_aluno
+    FOREIGN KEY(nusp_aluno) REFERENCES public.aluno(nusp_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.avaliacao_monitor
+    ADD CONSTRAINT fk_avaliacao_monitor_monitor
+    FOREIGN KEY(nusp_monitor) REFERENCES public.monitor(nusp_aluno)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Avaliacao Professor
+ALTER TABLE public.avaliacao_professor
+    ADD CONSTRAINT fk_avaliacao_professor_aluno
+    FOREIGN KEY(nusp_aluno) REFERENCES public.aluno(nusp_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.avaliacao_professor
+    ADD CONSTRAINT fk_avaliacao_professor_professor
+    FOREIGN KEY(nusp_professor) REFERENCES public.professor(nusp_associado)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Vinculo Trabalho
+ALTER TABLE public.vinculo_trabalho
+    ADD CONSTRAINT fk_vinculo_trabalho_associado
+    FOREIGN KEY(nusp_associado) REFERENCES public.associado(nusp_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.vinculo_trabalho
+    ADD CONSTRAINT fk_vinculo_trabalho_instituto
+    FOREIGN KEY(id_instituto) REFERENCES public.instituto(id_instituto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Coordenacao
+ALTER TABLE public.coordenacao
+    ADD CONSTRAINT fk_coordenacao_professor
+    FOREIGN KEY(nusp_professor) REFERENCES public.professor(nusp_associado)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.coordenacao
+    ADD CONSTRAINT fk_coordenacao_departamento
+    FOREIGN KEY(id_departamento) REFERENCES public.departamento(id_departamento)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Turma
+ALTER TABLE public.turma
+    ADD CONSTRAINT fk_turma_disciplina
+    FOREIGN KEY(sigla_disciplina) REFERENCES public.disciplina(sigla)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Representa Disciplina
+ALTER TABLE public.representa_disciplina
+    ADD CONSTRAINT fk_representa_disciplina_professor
+    FOREIGN KEY(nusp_professor) REFERENCES public.professor(nusp_associado)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.representa_disciplina
+    ADD CONSTRAINT fk_representa_disciplina_disciplina
+    FOREIGN KEY(sigla_disciplina) REFERENCES public.disciplina(sigla)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Oferta Aula
+ALTER TABLE public.oferta_aula
+    ADD CONSTRAINT fk_oferta_aula_sala
+    FOREIGN KEY(id_sala, id_instituto) REFERENCES public.sala(id_sala, id_instituto)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE;
+ALTER TABLE public.oferta_aula
+    ADD CONSTRAINT fk_oferta_aula_turma
+    FOREIGN KEY(sigla_disciplina, codigo_turma, vigencia)
+    REFERENCES public.turma(sigla_disciplina, codigo_turma, vigencia)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE;
+
+---
+
+-- Horario Aula
+ALTER TABLE public.horario_aula
+    ADD CONSTRAINT fk_horario_aula_oferta
+    FOREIGN KEY(id_oferta) REFERENCES public.oferta_aula(id_oferta)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Pedido Reserva
+ALTER TABLE public.pedido_reserva
+    ADD CONSTRAINT fk_pedido_reserva_sala
+    FOREIGN KEY(id_sala, id_instituto) REFERENCES public.sala(id_sala, id_instituto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.pedido_reserva
+    ADD CONSTRAINT fk_pedido_reserva_solicitante
+    FOREIGN KEY(nusp_solicitante) REFERENCES public.usuario(nusp)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.pedido_reserva
+    ADD CONSTRAINT fk_pedido_reserva_aprovador
+    FOREIGN KEY(nusp_aprovador) REFERENCES public.funcionario(nusp_associado)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE;
+
+---
+
+-- Recursos
+ALTER TABLE public.recursos
+    ADD CONSTRAINT fk_recursos_sala
+    FOREIGN KEY(id_sala, id_instituto) REFERENCES public.sala(id_sala, id_instituto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Leciona
+ALTER TABLE public.leciona
+    ADD CONSTRAINT fk_leciona_professor
+    FOREIGN KEY(nusp_professor) REFERENCES public.professor(nusp_associado)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.leciona
+    ADD CONSTRAINT fk_leciona_turma
+    FOREIGN KEY(sigla_disciplina, codigo_turma, vigencia)
+    REFERENCES public.turma(sigla_disciplina, codigo_turma, vigencia)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Participa Em
+ALTER TABLE public.participa_em
+    ADD CONSTRAINT fk_participa_em_aluno
+    FOREIGN KEY(nusp_aluno) REFERENCES public.aluno(nusp_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.participa_em
+    ADD CONSTRAINT fk_participa_em_turma
+    FOREIGN KEY(sigla_disciplina, codigo_turma, vigencia)
+    REFERENCES public.turma(sigla_disciplina, codigo_turma, vigencia)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Monitoria
+ALTER TABLE public.monitoria
+    ADD CONSTRAINT fk_monitoria_monitor
+    FOREIGN KEY(nusp_monitor) REFERENCES public.monitor(nusp_aluno)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.monitoria
+    ADD CONSTRAINT fk_monitoria_turma
+    FOREIGN KEY(sigla_disciplina, codigo_turma, vigencia)
+    REFERENCES public.turma(sigla_disciplina, codigo_turma, vigencia)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+---
+
+-- Requisito
+ALTER TABLE public.requisito
+    ADD CONSTRAINT fk_requisito_disciplina_requerente
+    FOREIGN KEY(sigla_disciplina_requerente) REFERENCES public.disciplina(sigla)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ALTER TABLE public.requisito
+    ADD CONSTRAINT fk_requisito_disciplina_requerida
+    FOREIGN KEY(sigla_disciplina_requerida) REFERENCES public.disciplina(sigla)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+
+--- Aqui serão explicitadas algumas funções que utilizamos para gerar a aleatorização dos dados dentro do próprio PG
+
+/*
+--- 1.Código para gerar a distribuição aleatória de alunos
+DO $$
+DECLARE
+    r RECORD;
+    curso_aleatorio INTEGER;
+    matricula_aleatoria INTEGER;
+BEGIN
+    FOR r IN 
+        SELECT nusp FROM usuario WHERE nusp BETWEEN 10000000 AND 99999999
+    LOOP
+        -- gera número de matrícula aleatório (6 dígitos)
+        matricula_aleatoria := FLOOR(RANDOM() * 900000 + 100000);
+
+        -- escolhe um curso aleatório
+        SELECT id_curso INTO curso_aleatorio FROM curso ORDER BY RANDOM()
+        LIMIT 1;
+
+        -- insere o aluno
+        INSERT INTO aluno (num_matricula, nusp_usuario, id_curso)
+        VALUES (matricula_aleatoria, r.nusp, curso_aleatorio)
+        ON CONFLICT (nusp_usuario) DO NOTHING;
+    END LOOP;
+END $$;
+
+--- 2.Comando para inserção aleatória de 65 monitores 
+INSERT INTO monitor (nusp_aluno)
+SELECT nusp_usuario FROM aluno
+	WHERE nusp_usuario BETWEEN 10000000 AND 99999999 
+	ORDER BY RANDOM() LIMIT 65
+ON CONFLICT (nusp_aluno) DO NOTHING;
+
+--- 3.Comando utilizado para aleatorização dos funcionários
+DO $$
+DECLARE
+    num INTEGER;
+    bloco VARCHAR(6);
+    sala_assoc VARCHAR(10);
+    nusp_associado INTEGER;
+    i INTEGER := 1;
+BEGIN
+    WHILE i <= 230 LOOP
+        LOOP
+            -- gera número de sala aleatório (2 dígitos)
+            num := FLOOR(RANDOM() * 900 + 100);
+
+            -- gera bloco aleatório (A, B ou C)
+            bloco := (ARRAY['A','B','C'])[FLOOR(RANDOM() * 3 + 1)];
+
+            -- concatena bloco + número
+            sala_assoc := bloco || num::TEXT;
+
+            -- escolhe um nusp existente aleatório de 5 dígitos que ainda não está na tabela associado
+            SELECT nusp INTO nusp_associado 
+            FROM usuario
+            WHERE nusp BETWEEN 10000 AND 99999
+              AND nusp NOT IN (SELECT nusp_usuario FROM associado)
+            ORDER BY RANDOM()
+            LIMIT 1;
+
+            -- se não houver NUSP disponível, sair do loop
+            IF nusp_associado IS NOT NULL THEN
+                -- verifica se a sala ainda não foi usada
+                EXIT WHEN NOT EXISTS (
+                    SELECT 1 
+                    FROM associado
+                    WHERE sala = sala_assoc
+                );
+            ELSE
+                RAISE NOTICE 'Não há mais NUSPs disponíveis. Foram geradas % associações.', i-1;
+                RETURN;
+            END IF;
+        END LOOP;
+
+        -- insere a combinação única
+        INSERT INTO associado (num, bloco, sala, nusp_usuario)
+        VALUES (num, bloco, sala_assoc, nusp_associado);
+
+        i := i + 1;
+    END LOOP;
+
+    RAISE NOTICE 'Foram geradas 100 associações únicas!';
+END $$;
+
+DO $$
+DECLARE
+    num INTEGER;
+    bloco CHAR(1); -- Usando CHAR(1) para bloco
+    sala_assoc VARCHAR(10);
+    nusp_associado INTEGER;
+    i INTEGER := 1;
+    total_funcionarios INTEGER := 90; -- O número de funcionários que você deseja vincular (0 a 69)
+BEGIN
+    WHILE i <= total_funcionarios LOOP
+        LOOP
+            -- 1. Gera número de sala aleatório (3 dígitos: 100-999)
+            num := FLOOR(RANDOM() * 900 + 100);
+
+            -- 2. Gera bloco aleatório (A, B ou C)
+            bloco := (ARRAY['A','B','C'])[FLOOR(RANDOM() * 3 + 1)];
+
+            -- 3. Concatena bloco + número para a sala
+            sala_assoc := bloco || num::TEXT;
+
+            -- 4. Escolhe um NUSP existente ALEATÓRIO no intervalo dos FUNCIONÁRIOS (0 a 69)
+            SELECT nusp INTO nusp_associado
+            FROM usuario
+            -- MUDANÇA AQUI: Filtra apenas os NUSPs de FUNCIONÁRIOS (0 a 69)
+            WHERE nusp BETWEEN 0 AND 100
+              AND nusp NOT IN (SELECT nusp_usuario FROM associado)
+            ORDER BY RANDOM()
+            LIMIT 1;
+
+            -- 5. Se não houver NUSP disponível, sair do loop
+            IF nusp_associado IS NOT NULL THEN
+                -- 6. Verifica se a sala ainda não foi usada (Garantindo unicidade de sala)
+                EXIT WHEN NOT EXISTS (
+                    SELECT 1
+                    FROM associado
+                    WHERE sala = sala_assoc
+                );
+            ELSE
+                RAISE NOTICE 'Não há mais NUSPs de funcionários (0-69) disponíveis. Foram geradas % associações.', i-1;
+                RETURN;
+            END IF;
+        END LOOP;
+
+        -- 7. Insere a combinação única
+        INSERT INTO associado (num, bloco, sala, nusp_usuario)
+        VALUES (num, bloco, sala_assoc, nusp_associado);
+
+        i := i + 1;
+    END LOOP;
+
+    RAISE NOTICE 'Foram geradas % associações de funcionários (NUSP 0-69) com sucesso!', total_funcionarios;
+END $$;
+
+--- 5. Inserção de professores por critério de email 
+
+INSERT INTO professor (nusp_associado)
+SELECT nusp FROM usuario
+	WHERE email ~'^prof_'
+ON CONFLICT (nusp_associado) DO NOTHING;
+
+--- 6. Inserção de professores por critério de email 
+INSERT INTO funcionario (nusp_associado)
+SELECT nusp FROM usuario
+	WHERE nusp BETWEEN 0 AND 100 AND email ~'^funcionario_'
+ON CONFLICT (nusp_associado) DO NOTHING;
+
+--- 7. Inserção dos alunos em turmas aleatoriamente 
+WITH disciplina_turmas AS (
+    SELECT
+        T.sigla_disciplina,
+        T.codigo_turma,
+        T.vigencia,
+        COUNT(P.nusp_aluno) AS qtd_alunos
+    FROM
+        turma T
+    LEFT JOIN
+        participa_em P
+        ON T.sigla_disciplina = P.sigla_disciplina
+        AND T.codigo_turma = P.codigo_turma
+        AND T.vigencia = P.vigencia
+    WHERE
+        T.semestre = 1
+    GROUP BY
+        T.sigla_disciplina, T.codigo_turma, T.vigencia
+),
+alunos_disciplinas AS (
+    SELECT
+        A.nusp_usuario AS nusp_aluno,
+        G.sigla_disciplina,
+        G.id_curso
+    FROM
+        aluno A
+    INNER JOIN
+        grade G
+        ON A.id_curso = G.id_curso
+    WHERE
+        G.tipo_disciplina = 1
+),
+turmas_disponiveis AS (
+    SELECT
+        ad.nusp_aluno,
+        dt.sigla_disciplina,
+        dt.codigo_turma,
+        dt.vigencia,
+        ROW_NUMBER() OVER (PARTITION BY ad.nusp_aluno, dt.sigla_disciplina ORDER BY dt.qtd_alunos ASC) AS rn
+    FROM
+        alunos_disciplinas ad
+    INNER JOIN
+        disciplina_turmas dt
+        ON ad.sigla_disciplina = dt.sigla_disciplina
+)
+
+
+INSERT INTO participa_em (nusp_aluno, media_final, status, frequencia, sigla_disciplina, codigo_turma, vigencia)
+SELECT
+    t.nusp_aluno,
+    ROUND(
+        (
+            0.7 * (RANDOM() * 10) +
+            0.3 * (5 + RANDOM() * 4)
+        )::NUMERIC, 2
+    ) AS media_final,
+    2 AS status,
+    ROUND(
+        LEAST(
+            GREATEST(
+                (
+                    80 + 15 * ((RANDOM() + RANDOM() + RANDOM() + RANDOM()) - 2)
+                )::NUMERIC,
+                0
+            ),
+            100
+        ), 1
+    ) AS frequencia,
+    t.sigla_disciplina,
+    t.codigo_turma,
+    t.vigencia
+FROM
+    turmas_disponiveis t
+WHERE
+    t.rn = 1;  -- garante que cada aluno pegue a turma com menos alunos
+
+--- Comandos sequenciais para inserção no segundo semestre 
+- Matrícula Automática para o Semestre 2, focada em alunos que estavam ativos no Semestre 1
+-- e respeitando apenas as disciplinas obrigatórias de sua grade.
+
+-- CTE 1: Identifica os alunos que estavam ativos no Semestre 1 (requisito: "todos que estavam no primeiro semestre apareçam de novo").
+-- Ajuste a 'vigencia' conforme o ano/semestre correto.
+WITH alunos_primeiro_semestre AS (
+    SELECT DISTINCT
+        nusp_aluno
+    FROM
+        participa_em
+    WHERE
+        vigencia = '2025-1' -- VIGÊNCIA DO SEMESTRE ANTERIOR
+),
+
+-- CTE 2: Associa os alunos ativos às disciplinas obrigatórias (tipo_disciplina = 1) de sua grade/curso.
+-- (Requisito: "cada aluno participe somente de sua grade")
+alunos_sem2 AS (
+    SELECT
+        APS.nusp_aluno,
+        G.sigla_disciplina,
+        A.id_curso
+    FROM
+        alunos_primeiro_semestre APS
+    INNER JOIN
+        aluno A
+        ON APS.nusp_aluno = A.nusp_usuario
+    INNER JOIN
+        grade G
+        ON A.id_curso = G.id_curso
+    WHERE
+        G.tipo_disciplina = 1 -- Filtra apenas disciplinas obrigatórias da grade
+),
+
+-- CTE 3: Conta a quantidade de alunos já matriculados em cada turma do Semestre 2.
+disciplina_turmas AS (
+    SELECT
+        T.sigla_disciplina,
+        T.codigo_turma,
+        T.vigencia,
+        COUNT(P.nusp_aluno) AS qtd_alunos
+    FROM
+        turma T
+    LEFT JOIN
+        participa_em P
+        ON T.sigla_disciplina = P.sigla_disciplina
+        AND T.codigo_turma = P.codigo_turma
+        AND T.vigencia = P.vigencia
+    WHERE
+        T.semestre = 2
+        AND T.vigencia = '2025-2' -- VIGÊNCIA DO SEMESTRE ATUAL
+    GROUP BY
+        T.sigla_disciplina, T.codigo_turma, T.vigencia
+),
+
+-- CTE 4: Associa cada aluno às turmas disponíveis para suas disciplinas e as ranqueia.
+-- A prioridade é sempre para a turma com menos alunos (qtd_alunos ASC).
+turmas_disponiveis AS (
+    SELECT
+        ad.nusp_aluno,
+        dt.sigla_disciplina,
+        dt.codigo_turma,
+        dt.vigencia,
+        -- Ranqueia, atribuindo 'rn=1' à turma menos cheia
+        ROW_NUMBER() OVER (PARTITION BY ad.nusp_aluno, dt.sigla_disciplina ORDER BY dt.qtd_alunos ASC) AS rn
+    FROM
+        alunos_sem2 ad
+    INNER JOIN
+        disciplina_turmas dt
+        ON ad.sigla_disciplina = dt.sigla_disciplina
+)
+
+-- INSERÇÃO: Executa a matrícula (status 1) para a turma com a melhor classificação (rn = 1),
+-- evitando matrículas duplicadas.
+INSERT INTO participa_em (nusp_aluno, status, sigla_disciplina, codigo_turma, vigencia)
+SELECT
+    t.nusp_aluno,
+    1 AS status, -- status "matriculado"
+    t.sigla_disciplina,
+    t.codigo_turma,
+    t.vigencia
+FROM
+    turmas_disponiveis t
+LEFT JOIN
+    participa_em p
+    ON t.nusp_aluno = p.nusp_aluno
+    AND t.sigla_disciplina = p.sigla_disciplina
+    AND t.vigencia = p.vigencia
+WHERE
+    t.rn = 1
+    AND p.nusp_aluno IS NULL;
+
+
+UPDATE participa_em 
+	SET status = 1;
+
+UPDATE participa_em
+SET status = 2
+WHERE nusp_aluno IN (
+    -- Subconsulta para identificar os alunos que reprovaram em uma disciplina requisito
+    SELECT DISTINCT p.nusp_aluno
+    FROM participa_em AS p
+    
+    JOIN requisito AS dr 
+        ON p.sigla_disciplina = dr.sigla_disciplina_requerida -- A coluna do pré-requisito deve ser dr.sigla_disciplina
+    
+    WHERE 
+        -- Condição 1: Reprovação por Frequência
+        p.frequencia <= 40
+        -- Condição 2: Reprovação por Nota
+        OR p.media_final <= 3.5
+);
+
+UPDATE participa_em 
+	SET status = 2
+	WHERE vigencia LIKE '%1'
+
+--- 7. Sorteio de professores nas turmas 
+WITH Professor_Turma_Sorteado AS (
+    SELECT
+        p.nusp_associado AS nusp_professor,
+        t.sigla_disciplina,
+        t.codigo_turma,
+        t.vigencia,
+        t.semestre,
+        -- Atribui um rank aleatório (rn) para cada professor elegível por turma.
+        ROW_NUMBER() OVER (
+            PARTITION BY t.sigla_disciplina, t.codigo_turma, t.vigencia
+            ORDER BY RANDOM()
+        ) as rn
+    FROM
+        professor p
+    INNER JOIN
+        vinculo_trabalho vt
+        ON p.nusp_associado = vt.nusp_associado
+    INNER JOIN
+        turma t
+        ON 1=1 -- Combina todos os professores com todas as turmas
+    INNER JOIN
+        grade g
+        ON t.sigla_disciplina = g.sigla_disciplina
+    INNER JOIN
+        curso c
+        ON g.id_curso = c.id_curso
+    WHERE
+        -- CONDIÇÃO: O Instituto do Professor DEVE ser igual ao Instituto do Curso.
+        vt.id_instituto = c.id_instituto
+        AND
+        -- Opcional: Apenas disciplinas obrigatórias do curso (tipo_disciplina = 1)
+        g.tipo_disciplina = 1
+        AND
+        -- Opcional: Filtra APENAS turmas do primeiro semestre de 2025 (2025-1)
+        t.vigencia = '2025-1'
+)
+INSERT INTO leciona (
+    nusp_professor,
+    sigla_disciplina,
+    codigo_turma,
+    vigencia,
+    observacoes
+)
+SELECT
+    nusp_professor,
+    sigla_disciplina,
+    codigo_turma,
+    vigencia,
+    NULL AS observacoes -- Preenche o campo 'observacoes' com NULL
+FROM
+    Professor_Turma_Sorteado
+WHERE
+    rn = 1; -- Seleciona APENAS o professor com rank 1 (o sorteado)
+--- 8. Sorteio de professores na coordenação 
+O $$
+DECLARE
+    r RECORD;
+    professores_usados INTEGER[] := '{}';
+BEGIN
+    FOR r IN (
+        SELECT DISTINCT d.id_departamento
+        FROM departamento d
+        ORDER BY d.id_departamento
+    )
+    LOOP
+				-- Dentro da sua função PL/pgSQL, modifique o comando INSERT:
+		INSERT INTO coordenacao (nusp_professor, id_departamento, data_inicio, data_fim)
+		SELECT 
+		    pe.nusp_associado,
+		    r.id_departamento,
+		    CURRENT_DATE,
+		    NULL::DATE
+		FROM (
+		    SELECT DISTINCT p.nusp_associado
+		    FROM professor p
+		    JOIN vinculo_trabalho v ON v.nusp_associado = p.nusp_associado
+		    JOIN departamento d ON v.id_instituto = d.id_instituto
+		    WHERE d.id_departamento = r.id_departamento
+		      -- Corrigi a lista de cargos removendo as aspas duplas desnecessárias
+		      AND (v.cargo IN ('Professor Nível 1', 'Professor Nível 2')) 
+		      AND NOT (p.nusp_associado = ANY(professores_usados))
+		    ORDER BY p.nusp_associado
+		    LIMIT 1
+		) pe
+		ON CONFLICT (nusp_professor, id_departamento) DO NOTHING; -- <--- CORREÇÃO PRINCIPAL
+		        
+        -- Adiciona o professor usado ao array
+        SELECT professores_usados || ARRAY(
+            SELECT nusp_professor 
+            FROM coordenacao 
+            WHERE id_departamento = r.id_departamento
+              AND data_fim IS NULL
+        ) INTO professores_usados;
+    END LOOP;
+END $$;
+
+--- 9. Alocação aleatórias das ofertas de aulas em salas e horários 
+-- Alocação aleatória de salas para turmas do semestre 2025-2 (2 ofertas por turma)
+WITH turmas_a_alocar AS (
+    -- 1. Obtém as chaves das turmas e o ID do Instituto correspondente
+    SELECT
+        t.sigla_disciplina,
+        t.codigo_turma,
+        t.vigencia,
+        dpt.id_instituto
+    FROM
+        turma t
+    JOIN
+        disciplina dsc ON t.sigla_disciplina = dsc.sigla
+    JOIN
+        departamento dpt ON dsc.id_departamento = dpt.id_departamento
+    WHERE
+        t.vigencia = '2025-2'
+),
+salas_selecionadas AS (
+    -- 2. Seleciona uma sala aleatória para cada turma
+    SELECT
+        ta.sigla_disciplina,
+        ta.codigo_turma,
+        ta.vigencia,
+        ta.id_instituto,
+        s.id_sala,
+        ROW_NUMBER() OVER (
+            PARTITION BY ta.sigla_disciplina, ta.codigo_turma, ta.vigencia
+            ORDER BY RANDOM()
+        ) AS rn
+    FROM
+        turmas_a_alocar ta
+    JOIN
+        sala s ON ta.id_instituto = s.id_instituto
+),
+ofertas_duplicadas AS (
+    -- 3. Gera 2 registros para cada turma com a mesma sala
+    SELECT
+        id_sala,
+        sigla_disciplina,
+        codigo_turma,
+        vigencia,
+        id_instituto
+    FROM
+        salas_selecionadas
+    WHERE
+        rn = 1
+    
+    UNION ALL
+    
+    SELECT
+        id_sala,
+        sigla_disciplina,
+        codigo_turma,
+        vigencia,
+        id_instituto
+    FROM
+        salas_selecionadas
+    WHERE
+        rn = 1
+)
+INSERT INTO oferta_aula (
+    id_sala,
+    sigla_disciplina,
+    codigo_turma,
+    vigencia,
+    id_instituto
+)
+SELECT
+    id_sala,
+    sigla_disciplina,
+    codigo_turma,
+    vigencia,
+    id_instituto
+FROM
+    ofertas_duplicadas;
+
+--- 10. ALocação aleatória de professores para representar disciplinas
+
+-- Insere exatamente 30 representações (1 professor : 1 disciplina)
+INSERT INTO representa_disciplina (
+    nusp_professor,
+    sigla_disciplina,
+    data_inicio,
+    data_fim
+)
+WITH professores_nivel2 AS (
+    -- Lista professores Nível 2 com seus institutos
+    SELECT DISTINCT
+        v.nusp_associado,
+        d.id_instituto -- Busca o instituto via departamento (assumindo que vinculo_trabalho tem id_instituto)
+    FROM
+        vinculo_trabalho v
+    JOIN
+        professor p ON v.nusp_associado = p.nusp_associado
+    JOIN
+        departamento d ON v.id_instituto = d.id_instituto -- Liga ao departamento para ter o id_instituto (corrigido da sua versão)
+    WHERE
+        v.cargo LIKE 'Professor Nível 2%'
+),
+disciplinas_com_professor AS (
+    -- Para cada disciplina, escolhe um professor do instituto correto
+    SELECT
+        dsc.sigla AS sigla_disciplina,
+        pn2.nusp_associado,
+        -- Ranqueia professores para dar apenas 1 por disciplina (aleatório)
+        ROW_NUMBER() OVER (
+            PARTITION BY dsc.sigla 
+            ORDER BY RANDOM() 
+        ) AS professor_rank,
+        -- Ranqueia disciplinas para dar apenas 1 por professor (aleatório)
+        ROW_NUMBER() OVER (
+            PARTITION BY pn2.nusp_associado 
+            ORDER BY RANDOM() 
+        ) AS disciplina_rank
+    FROM
+        disciplina dsc
+    JOIN
+        departamento d ON dsc.id_departamento = d.id_departamento
+    JOIN
+        professores_nivel2 pn2 ON d.id_instituto = pn2.id_instituto
+)
+SELECT
+    nusp_associado AS nusp_professor,
+    sigla_disciplina,
+    CURRENT_DATE AS data_inicio,
+    -- O VALOR NULL É DEIXADO SEM ASPAS, E O TIPO DO SELECT ESTÁ LIMPO
+    NULL AS data_fim 
+FROM
+    disciplinas_com_professor
+WHERE
+    professor_rank = 1     -- Cada disciplina tem apenas 1 professor (aleatório)
+    AND disciplina_rank = 1  -- Cada professor representa apenas 1 disciplina (aleatório)
+LIMIT 30; -- Pega exatamente 30 combinações únicas
+
+--- 11 Inserção aleatória de monitorias 
+
+INSERT INTO monitoria (
+    carga_horaria,
+    nusp_monitor,
+    sigla_disciplina,
+    codigo_turma,
+    vigencia
+)
+WITH turmas_semestre AS (
+    SELECT 
+        sigla_disciplina,
+        codigo_turma,
+        vigencia
+    FROM 
+        turma
+    WHERE 
+        vigencia = '2025-2'
+),
+monitores_por_turma AS (
+    SELECT
+        t.sigla_disciplina,
+        t.codigo_turma,
+        t.vigencia,
+        m.nusp_aluno AS nusp_monitor, -- A coluna 'nusp_monitor' é definida AQUI
+        
+        ROW_NUMBER() OVER (
+            PARTITION BY t.sigla_disciplina, t.codigo_turma, t.vigencia
+            ORDER BY RANDOM()
+        ) AS rank_aleatorio
+    FROM
+        turmas_semestre t
+    CROSS JOIN
+        monitor m
+    LEFT JOIN
+        participa_em mcr ON mcr.nusp_aluno = m.nusp_aluno -- Assumindo que a coluna é nusp_aluno
+                      AND mcr.sigla_disciplina = t.sigla_disciplina
+                      AND mcr.codigo_turma = t.codigo_turma
+                      AND mcr.vigencia = t.vigencia
+    WHERE
+        mcr.nusp_aluno IS NULL -- Filtra quem está matriculado
+)
+-- O SELECT final é o único lugar onde a coluna 'nusp_monitor' deve ser usada.
+SELECT
+    80, -- Carga horária fixa (ajuste conforme necessário)
+    nusp_monitor,
+    sigla_disciplina,
+    codigo_turma,
+    vigencia
+FROM
+    monitores_por_turma
+WHERE
+    rank_aleatorio = 1;
+
+--- 12. Colocar não efetivados no registro 
+UPDATE vinculo_trabalho
+SET tipo_vinculo = 1 -- 2 é o código para Temporário
+WHERE nusp_associado IN (
+    SELECT nusp_associado
+    FROM vinculo_trabalho
+    -- Opcional: Adicione um filtro se você quiser que os temporários venham de um grupo específico de cargos ou institutos
+    -- WHERE tipo_vinculo IS DISTINCT FROM 2 -- Seleciona apenas registros que AINDA NÃO SÃO 2 (Temporário)
+    ORDER BY random() -- Seleciona 30 registros aleatórios
+    LIMIT 30
+);
+*/
+
