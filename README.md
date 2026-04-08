@@ -1,7 +1,7 @@
 # USPACE
 ### Projeto de Desenvolvimento de Sistemas de Bancos de Dados
 
-Neste projeto foi criado um conjunto de dados de dados para povoação, controle e análise. 
+Neste projeto foi criado um conjunto de dados para povoação, controle e análise. 
 Tais informações foram baseadas nos sistemas e redes da Universidade de São Paulo.
-
-Autores [MarcosSalvadorWeb] [grmsanches]
+O projeto compõe uma série de análises e usos das ferramentas no SQL
+Autores [@MarcosSalvadorWeb] [@grmsanches]
