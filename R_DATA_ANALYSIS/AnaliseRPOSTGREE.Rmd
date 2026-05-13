@@ -19,7 +19,7 @@ library(kableExtra)
 ```{r}
 DB_HOST <- "localhost"
 DB_PORT <- 5432
-DB_NAME <- "Teste"      
+DB_NAME <- "USPACE"      
 DB_USER <- "postgres"  
 DB_PASS <- "1234"     
 
@@ -92,7 +92,7 @@ ggplot(matriculas, aes(x = factor(nusp_aluno), y = media_final)) +
 ggplot(matriculas, aes(x = factor(nusp_aluno), y = frequencia)) +
     geom_boxplot(fill = "lightgreen", color = "black") +
     labs(
-        title = "Distribuição das Notas por Aluno",
+        title = "Distribuição das Frequênicas por Aluno",
         x = "", # Eixo X sem rótulo para não poluir (como no slide)
         y = "Média Final"
     ) +
@@ -125,7 +125,7 @@ if (nrow(df_plot_notas_validas) > 0) {
         geom_histogram(binwidth = 0.5, color = "black", alpha = 0.8) +
         facet_wrap(~ Semestre, scales = "free_y") +
         labs(
-            title = "Histograma de Distribuição Geral das Notas por Semestre",
+            title = "Histograma de Distribuição Geral das Notas  por Semestre",
             x = "Nota Final",
             y = "Frequência (Número de Alunos)"
         ) +
